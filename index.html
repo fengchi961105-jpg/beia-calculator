@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>北极星 A 计算模板</title>
+<style>
+:root{--navy:#344563;--blue:#4a6cf7;--ink:#26364b;--muted:#6b7280;--line:#e3e8ef;--page:#f7f8fb;--input:#fff9e8;--green:#237a43;--green-bg:#edf8f1;--orange:#c2410c}
+*{box-sizing:border-box}body{margin:0;background:var(--page);color:var(--ink);font:14px/1.5 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+.page{max-width:1540px;margin:0 auto;padding:28px 24px 48px}h1{margin:0;font-size:27px;color:#171d33}.model-note{max-width:980px;margin:8px 0 22px;padding:9px 12px;border-left:3px solid #a8b4c7;background:#f1f4f8;color:#667085;border-radius:0 7px 7px 0;font-size:12px}
+.module{background:#fff;border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:18px;box-shadow:0 1px 2px rgba(16,24,40,.03)}
+.module-title{font-size:19px;font-weight:700;margin-bottom:18px;padding-left:12px;border-left:4px solid var(--blue)}.sub-title{font-size:15px;font-weight:700;margin:20px 0 12px;color:#344054}.sub-title:first-child{margin-top:0}
+.form-row{display:flex;flex-wrap:wrap;gap:13px;align-items:flex-end}.field{min-width:145px;flex:1}.field.wide{min-width:230px;flex:1.4}.field label{display:block;font-size:12px;font-weight:600;color:#596273;margin-bottom:6px}
+.overview-filter{width:280px;max-width:100%;margin:0 0 22px;padding:12px 14px;background:#f8faff;border:1px solid #e2e8f4;border-radius:9px}.overview-filter .field{min-width:0}.overview-filter select{background:#fff}
+.field input,.field select{width:100%;height:40px;padding:8px 10px;border:1px solid #cfd6e2;border-radius:7px;background:#fff;color:#172033;font-size:14px;font-variant-numeric:tabular-nums}
+.field input.editable{background:var(--input);border-color:#e6b94f}.field input.fixed{background:#eef3ff;border-color:#a9b9ee}.field input.auto{background:#eef7f1;color:var(--green);font-weight:700;border-style:dashed}.field input.primary-auto{background:#fff4cf;color:#8a5a00;border-color:#e6b94f}.field input:focus,.field select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(74,108,247,.12)}
+.hint{font-size:11px;color:#8b929e;margin-top:5px}.label-note{margin-left:6px;color:#8b929e;font-weight:400}.group-box{border:1px solid var(--line);border-radius:10px;padding:16px;margin-top:12px}.group-box.income{border-top:3px solid #2b8a4b}.group-box.cost{border-top:3px solid #db4a2b}.group-head{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:13px}.group-head h3{margin:0;font-size:15px}.group-head span{font-size:11px;color:var(--muted)}
+.fixed-row{margin-top:13px;padding-top:13px;border-top:1px dashed #d7dce4}.fixed-label{font-size:11px;color:var(--muted);margin-bottom:8px}
+.table-wrap{overflow-x:auto}.data-table{width:100%;min-width:1180px;border-collapse:collapse;font-size:12px}.data-table th{background:var(--navy);color:#fff;padding:9px 8px;font-weight:600;white-space:nowrap}.data-table td{text-align:center;padding:8px;border:1px solid var(--line);font-variant-numeric:tabular-nums}.data-table tr:nth-child(even){background:#fafbfc}
+.note{font-size:11px;color:#818896;margin-top:10px}.result-banner{margin-top:16px;padding:18px 20px;background:linear-gradient(120deg,var(--navy),var(--blue));border-radius:10px;color:#fff;display:grid;grid-template-columns:repeat(7,1fr);gap:18px}.result-item span{display:block;font-size:11px;color:rgba(255,255,255,.78)}.result-item strong{display:block;font-size:23px;margin-top:3px;font-variant-numeric:tabular-nums}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}.detail-panel{border:1px solid var(--line);border-radius:9px;padding:15px 17px}.detail-panel h3{font-size:14px;margin:0 0 8px;padding-bottom:8px;border-bottom:2px solid}.detail-panel h3.income{color:var(--green);border-color:var(--green)}.detail-panel h3.cost{color:var(--orange);border-color:var(--orange)}
+.d-row{display:flex;justify-content:space-between;gap:14px;padding:6px 0;border-bottom:1px solid #f0f2f5}.d-row span{color:#535b68}.d-row strong{white-space:nowrap;font-variant-numeric:tabular-nums}.d-row.total{margin-top:5px;padding-top:9px;border-top:1px solid #ccd2db;border-bottom:0;font-size:15px}.green{color:var(--green)}.orange{color:var(--orange)}
+.sens-table{width:100%;min-width:1040px;border-collapse:collapse;margin-top:14px}.sens-table th{background:var(--navy);color:#fff;padding:9px;font-size:12px}.sens-table td{text-align:center;padding:8px;border:1px solid var(--line);font-variant-numeric:tabular-nums}.sens-table tr.best td{font-weight:700}.sens-table tr.best td:first-child{box-shadow:inset 4px 0 #22a05a;color:#166534}
+.sensitivity-chart{margin-top:18px;padding:15px 16px 10px;border:1px solid var(--line);border-radius:10px;background:#fbfcfe}.chart-head{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:8px}.chart-head h3{margin:0;font-size:14px}.chart-legend{display:flex;gap:16px;align-items:center;color:#596273;font-size:11px}.legend-item{display:flex;align-items:center;gap:6px}.legend-bar{width:14px;height:9px;background:#9fc3ff;border:1px solid #78a8ef}.legend-line{width:18px;height:0;border-top:3px solid #d97706;position:relative}.legend-line:after{content:"";position:absolute;width:6px;height:6px;border-radius:50%;background:#d97706;left:6px;top:-4px}.chart-canvas-wrap{position:relative;width:100%;height:320px}.chart-canvas-wrap canvas{display:block;width:100%;height:100%}.chart-note{margin:6px 0 0;color:#818896;font-size:11px}.table-actions{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:16px}.table-actions h3{margin:0;font-size:14px}.download-btn{border:1px solid #b9c5d6;background:#fff;color:#344563;border-radius:7px;padding:8px 13px;font:inherit;font-weight:600;cursor:pointer}.download-btn:hover{background:#f3f6fb;border-color:#8396b2}.download-btn:focus{outline:none;box-shadow:0 0 0 3px rgba(74,108,247,.12)}
+.usage{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}.usage h3{margin:0 0 8px;font-size:14px}.usage ol{margin:0;padding-left:20px;color:#596273}.usage li{margin:5px 0}.usage a{color:#315de8;text-decoration:none}.usage a:hover{text-decoration:underline}.formula{margin-top:11px;padding:10px 12px;background:#f1f4ff;border-left:3px solid var(--blue);border-radius:0 6px 6px 0;color:#475467;font-size:12px}
+@media(max-width:1050px){.result-banner{grid-template-columns:repeat(4,1fr)}}@media(max-width:760px){.page{padding:18px 12px 32px}.module{padding:17px}.detail-grid{grid-template-columns:1fr}.result-banner{grid-template-columns:1fr 1fr}.field{min-width:calc(50% - 8px)}.chart-head,.table-actions{align-items:flex-start;flex-direction:column}.chart-canvas-wrap{height:280px}}
+</style>
+<style>
+body.access-locked{overflow:hidden;background:#10192f}
+body.access-locked>.page{display:none}
+.access-gate{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;background:radial-gradient(circle at 72% 22%,#1d4270 0,#162a4b 34%,#111a31 72%,#0d1426 100%)}
+body:not(.access-locked)>.access-gate{display:none}
+.access-card{width:min(410px,100%);padding:34px 32px 28px;border:1px solid rgba(255,255,255,.15);border-radius:18px;background:rgba(31,45,75,.94);box-shadow:0 24px 70px rgba(0,0,0,.38);color:#fff;text-align:center;backdrop-filter:blur(12px)}
+.access-icon{display:flex;align-items:center;justify-content:center;width:58px;height:58px;margin:0 auto 17px;border:1px solid rgba(125,168,255,.38);border-radius:16px;background:rgba(90,126,204,.18);font-size:28px}
+.access-card h2{margin:0;font-size:23px;letter-spacing:.04em}.access-card .access-subtitle{margin:8px 0 23px;color:#b6c3db;font-size:13px}
+.access-form{display:grid;gap:12px}.access-input{width:100%;height:48px;padding:0 15px;border:1px solid #64779b;border-radius:9px;background:#192640;color:#fff;font:inherit;font-size:15px;outline:none}.access-input::placeholder{color:#8796b3}.access-input:focus{border-color:#78a3ff;box-shadow:0 0 0 3px rgba(91,139,244,.18)}
+.access-button{height:48px;border:0;border-radius:9px;background:linear-gradient(120deg,#5c83ee,#4669d8);color:#fff;font:inherit;font-weight:700;letter-spacing:.12em;cursor:pointer;box-shadow:0 8px 20px rgba(47,82,171,.32)}.access-button:hover{filter:brightness(1.06)}.access-button:disabled{cursor:wait;opacity:.7}
+.access-error{min-height:20px;margin:1px 0 0;color:#ffb4b4;font-size:12px}.access-footnote{margin:20px 0 0;padding-top:18px;border-top:1px solid rgba(255,255,255,.11);color:#8190ad;font-size:11px}
+@media(max-width:520px){.access-card{padding:29px 22px 24px}}
+</style>
+</head>
+<body class="access-locked">
+<section class="access-gate" id="accessGate" aria-label="访问验证">
+  <div class="access-card">
+    <div class="access-icon" aria-hidden="true">🔒</div>
+    <h2>北极星 A 计算模板</h2>
+    <p class="access-subtitle">内部经营测算工具 · 请输入访问密码</p>
+    <form class="access-form" id="accessForm">
+      <input class="access-input" id="accessPassword" type="password" autocomplete="current-password" placeholder="请输入访问密码" aria-label="访问密码" required>
+      <button class="access-button" id="accessButton" type="submit">进入模板</button>
+      <p class="access-error" id="accessError" role="alert" aria-live="polite"></p>
+    </form>
+    <p class="access-footnote">本页面仅供内部测算使用，请勿向无关人员转发。</p>
+  </div>
+</section>
+<script>
+(function(){
+ var expectedHash="42b9f47cd500f71a208603dfe28a1be1769520f4131539a71c8d9e4c732b9016",sessionKey="beia_access_ok";
+ function unlock(){document.body.classList.remove("access-locked");document.getElementById("accessPassword").value=""}
+ try{if(sessionStorage.getItem(sessionKey)==="1"){unlock();return}}catch(e){}
+ var form=document.getElementById("accessForm"),input=document.getElementById("accessPassword"),error=document.getElementById("accessError"),button=document.getElementById("accessButton");
+ form.addEventListener("submit",async function(event){
+  event.preventDefault();error.textContent="";button.disabled=true;button.textContent="验证中";
+  try{
+   var data=new TextEncoder().encode(input.value),digest=await crypto.subtle.digest("SHA-256",data),hash=Array.from(new Uint8Array(digest)).map(function(value){return value.toString(16).padStart(2,"0")}).join("");
+   if(hash===expectedHash){try{sessionStorage.setItem(sessionKey,"1")}catch(e){}unlock()}
+   else{error.textContent="访问密码不正确，请重新输入。";input.select()}
+  }catch(e){error.textContent="当前浏览器无法完成验证，请使用最新版浏览器。"}
+  button.disabled=false;button.textContent="进入模板";
+ });
+ setTimeout(function(){input.focus()},0);
+})();
+</script>
+<main class="page">
+  <h1>北极星计算模板</h1>
+  <p class="model-note">当前计算器仅单独输入二年级占比，三至六年级默认平分剩余占比；由于六年级续报参数和实际年级结构存在细微差异，测算结果可能与商分看板略有偏差。建议用于经营估算与趋势判断，最终结果以商分看板为准。</p>
+
+  <section class="module">
+    <div class="module-title">参数总览（分年级）</div>
+    <div class="overview-filter">
+      <div class="field"><label for="season">售卖品</label>
+        <select id="season" onchange="handleSeasonChange()">
+          <option value="26秋上" selected>26秋上</option><option value="26秋下9">26秋下9</option><option value="26秋下12">26秋下12</option>
+          <option value="26春上9">26春上9</option><option value="26春下9">26春下9</option><option value="26春下12">26春下12</option><option value="26暑_新思维">26暑（新思维）</option>
+        </select>
+      </div>
+    </div>
+    <div class="table-wrap"><table class="data-table" id="paramsTable"></table></div>
+    <p class="note" id="paramsNote">暑1期—秋4期统一使用26秋上参数。</p>
+  </section>
+
+  <section class="module">
+    <div class="module-title">北极星 A 计算器</div>
+    <div class="sub-title">基础数据</div>
+    <div class="form-row">
+      <div class="field"><label for="exQty">例子量</label><input class="editable" id="exQty" type="number" value="17345" step="any" oninput="calculate()"></div>
+      <div class="field"><label for="g2Share">二年级占比（%）<span class="label-note">三至六年级平分剩余占比</span></label><input class="editable" id="g2Share" type="number" value="8.00" step="any" oninput="calculate()" onblur="formatPercentInput(this)"></div>
+    </div>
+
+    <div class="group-box income">
+      <div class="group-head"><h3>收入参数</h3><span>常用调整项在前，固定参数在后</span></div>
+      <div class="form-row">
+        <div class="field"><label for="conversion">总PV转化率（%）</label><input class="editable" id="conversion" type="number" value="15.76" step="any" oninput="calculate()" onblur="formatPercentInput(this)"></div>
+        <div class="field"><label for="exampleOutput">例产（自动）</label><input class="auto primary-auto" id="exampleOutput" readonly></div>
+        <div class="field"><label for="leadIncome">例子拉新收入/例（元）</label><input class="editable" id="leadIncome" type="number" value="8" step="any" oninput="calculate()"></div>
+      </div>
+      <div class="fixed-row">
+        <div class="fixed-label">可修改的固定收入参数</div>
+        <div class="form-row">
+          <div class="field"><label for="margin">税后毛利率（%）</label><input class="fixed" id="margin" type="number" value="77.00" step="any" oninput="calculate()" onblur="formatPercentInput(this)"></div>
+          <div class="field"><label for="refundFactor">学科退费系数（%）</label><input class="fixed" id="refundFactor" type="number" value="85.00" step="any" oninput="calculate()" onblur="formatPercentInput(this)"></div>
+          <div class="field"><label for="couplingRate">耦合率（%）<span class="label-note">耦合PV÷学科PV</span></label><input class="fixed" id="couplingRate" type="number" value="43.00" step="any" oninput="calculate()" onblur="formatPercentInput(this)"></div>
+          <div class="field"><label for="overlap">收入重合系数</label><input class="fixed" id="overlap" type="number" value="0.993" step="any" oninput="calculate()"></div>
+          <div class="field"><label>学科加权ASP（自动）</label><input class="auto" id="subjectAsp" readonly></div>
+          <div class="field"><label>耦合加权ASP（自动）</label><input class="auto" id="couplingAsp" readonly></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="group-box cost">
+      <div class="group-head"><h3>成本参数</h3><span>常用调整项在前，LPC固定成本参数在后</span></div>
+      <div class="form-row">
+        <div class="field"><label for="efficiency">人效</label><input class="editable" id="efficiency" type="number" value="88" step="any" oninput="calculate()"></div>
+        <div class="field"><label for="periods">月承接期次</label><input class="editable" id="periods" type="number" value="2" step="any" oninput="calculate()"></div>
+        <div class="field"><label for="settlement">结算成本/例（元）</label><input class="editable" id="settlement" type="number" value="108" step="any" oninput="calculate()"></div>
+        <div class="field"><label for="material">实物成本/例（元）</label><input class="editable" id="material" type="number" value="0" step="any" oninput="calculate()"></div>
+        <div class="field"><label for="marketLabor">市场人力/例（元）</label><input class="editable" id="marketLabor" type="number" value="16" step="any" oninput="calculate()"></div>
+        <div class="field"><label for="marketRd">市场产研/例（元）</label><input class="editable" id="marketRd" type="number" value="3" step="any" oninput="calculate()"></div>
+      </div>
+      <div class="fixed-row">
+        <div class="fixed-label">可修改的固定成本参数</div>
+        <div class="form-row">
+          <div class="field"><label for="activeMonthly">排班LPC月成本（元）</label><input class="fixed" id="activeMonthly" type="number" value="15300" step="any" oninput="calculate()"></div>
+          <div class="field"><label for="idleMonthly">未排班LPC月成本（元）</label><input class="fixed" id="idleMonthly" type="number" value="8700" step="any" oninput="calculate()"></div>
+          <div class="field"><label for="joinRate">LPC排班率（%）</label><input class="fixed" id="joinRate" type="number" value="80.00" step="any" oninput="calculate()" onblur="formatPercentInput(this)"></div>
+          <div class="field"><label>LPC月综合人力成本（自动）</label><input class="auto" id="lpcMonthly" readonly></div>
+          <div class="field"><label>LPC人力成本/例（自动）</label><input class="auto" id="lpcPerExample" readonly></div>
+          <div class="field"><label>单例总成本（自动）</label><input class="auto" id="totalCostAuto" readonly></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-banner">
+      <div class="result-item"><span>北极星 A</span><strong id="northA">—</strong></div><div class="result-item"><span>LTV收入/例</span><strong id="ltvIncome">—</strong></div>
+      <div class="result-item"><span>单例总成本</span><strong id="totalCost">—</strong></div><div class="result-item"><span>例产</span><strong id="resultOutput">—</strong></div>
+      <div class="result-item"><span>总PV转化率</span><strong id="resultConversion">—</strong></div><div class="result-item"><span>预计人数</span><strong id="headcount">—</strong></div><div class="result-item"><span>北A利润</span><strong id="profit">—</strong></div>
+    </div>
+    <div class="detail-grid"><div class="detail-panel"><h3 class="income">收入计算</h3><div id="incomeDetail"></div></div><div class="detail-panel"><h3 class="cost">成本计算</h3><div id="costDetail"></div></div></div>
+  </section>
+
+  <section class="module">
+    <div class="module-title">预计例产与成本敏感性</div>
+    <div class="form-row">
+      <div class="field"><label for="slope">人效每增加10，例产变化</label><input class="editable" id="slope" type="number" value="-4" step="any" oninput="calculateSensitivity()"></div>
+      <div class="field"><label for="effMin">人效下限</label><input id="effMin" type="number" value="40" step="any" oninput="calculateSensitivity()"></div>
+      <div class="field"><label for="effMax">人效上限</label><input id="effMax" type="number" value="150" step="any" oninput="calculateSensitivity()"></div>
+    </div>
+    <div class="sensitivity-chart">
+      <div class="chart-head"><h3>人效变化下的预计例产与北极星A</h3><div class="chart-legend"><span class="legend-item"><i class="legend-bar"></i>预计例产</span><span class="legend-item"><i class="legend-line"></i>北极星A</span></div></div>
+      <div class="chart-canvas-wrap"><canvas id="sensitivityChart" role="img" aria-label="横轴为人效，柱状图为预计例产，折线图为北极星A"></canvas></div>
+      <p class="chart-note">左轴：预计例产（元/例）；右轴：北极星A。图表随上方参数与计算器输入自动更新。</p>
+    </div>
+    <div class="table-actions"><h3>敏感性明细</h3><button class="download-btn" type="button" onclick="downloadSensitivityCsv()">下载明细 CSV</button></div>
+    <div class="table-wrap"><table class="sens-table"><thead><tr><th>人效</th><th>预计人数</th><th>预计PV转化率</th><th>预计例产</th><th>人产</th><th>总GMV产出</th><th>北极星A</th><th>LPC成本/例</th><th>单例总成本</th><th>LTV收入/例</th></tr></thead><tbody id="sensBody"></tbody></table></div>
+    <div class="usage"><h3>使用说明</h3><ol><li>先在参数总览选择售卖品，系统会展示对应的分年级ASP、续报ASP、毛利、学科退费系数和LPC排班参数。</li><li>参数表已配置学科退费系数时，切换售卖品会自动带入；未配置时保留当前手动值。带入后仍可修改。</li><li>基础数据填写例子量和二年级占比；三至六年级平分剩余占比。</li><li>收入端重点调整PV转化率和例子拉新收入；成本端重点调整人效、承接期次及各项单例成本。</li><li>金额和数量默认显示整数，输入框支持小数；率值显示2位小数，北极星A统一四舍五入保留3位。</li><li>参数来源：<a href="https://docs.yukework.com/doc?fileId=1872221674903367682" target="_blank" rel="noopener noreferrer">各学季北极星参数表</a>。</li></ol>
+      <div class="formula">北A = LTV收入/例 ÷ 单例总成本；学科退费系数 = 1－退费率，并同时作用于当前ASP与续报ASP；耦合率=耦合PV÷学科PV；LPC月综合人力成本=排班月成本+未排班月成本×(1÷LPC排班率－1)；LPC人力成本/例=LPC月综合人力成本÷月承接期次÷人效。</div>
+    </div>
+  </section>
+</main>
+
+<script>
+var P={
+"26秋上":[
+{cat:"学科",g:"一年级",asp:850,rA:823,rB:1116,cASP:null,crA:null,crB:null,m:.77,rf:.85,cm:.77,crf:.85,jr:.80},
+{cat:"学科",g:"二年级",asp:850,rA:823,rB:1205,cASP:788,crA:794,crB:1140,m:.77,rf:.85,cm:.77,crf:.85,jr:.80},
+{cat:"学科",g:"三年级",asp:945,rA:1042,rB:1425,cASP:798,crA:955,crB:1300,m:.77,rf:.85,cm:.77,crf:.85,jr:.80},
+{cat:"学科",g:"四年级",asp:945,rA:1042,rB:1425,cASP:798,crA:955,crB:1300,m:.77,rf:.85,cm:.77,crf:.85,jr:.80},
+{cat:"学科",g:"五年级",asp:945,rA:1042,rB:1425,cASP:798,crA:955,crB:1300,m:.77,rf:.85,cm:.77,crf:.85,jr:.80},
+{cat:"学科",g:"六年级",asp:945,rA:1042,rB:1419,cASP:798,crA:955,crB:1331,m:.77,rf:.85,cm:.77,crf:.85,jr:.80}],
+"26秋下9":[
+{cat:"学科",g:"一年级",asp:749,rA:851,rB:1150,cASP:null,crA:null,crB:null,m:.77,rf:.90,cm:.77,crf:.90,jr:.80},
+{cat:"学科",g:"二年级",asp:749,rA:930,rB:1316,cASP:699,crA:888,crB:1239,m:.77,rf:.90,cm:.77,crf:.90,jr:.80},
+{cat:"学科",g:"三年级",asp:792,rA:1130,rB:1515,cASP:749,crA:1013,crB:1363,m:.77,rf:.90,cm:.77,crf:.90,jr:.80},
+{cat:"学科",g:"四年级",asp:792,rA:1130,rB:1515,cASP:749,crA:1013,crB:1363,m:.77,rf:.90,cm:.77,crf:.90,jr:.80},
+{cat:"学科",g:"五年级",asp:792,rA:1130,rB:1515,cASP:749,crA:1013,crB:1363,m:.77,rf:.90,cm:.77,crf:.90,jr:.80},
+{cat:"学科",g:"六年级",asp:792,rA:1092,rB:1492,cASP:749,crA:1009,crB:1410,m:.77,rf:.90,cm:.77,crf:.90,jr:.80}],
+"26秋下12":[
+{cat:"学科",g:"一年级",asp:836,rA:851,rB:1150,cASP:null,crA:null,crB:null,m:.77,rf:.90,cm:.77,crf:.90,jr:.80},
+{cat:"学科",g:"二年级",asp:836,rA:930,rB:1316,cASP:827,crA:888,crB:1239,m:.77,rf:.90,cm:.77,crf:.90,jr:.80},
+{cat:"学科",g:"三年级",asp:1056,rA:1130,rB:1515,cASP:887,crA:1013,crB:1363,m:.77,rf:.90,cm:.77,crf:.90,jr:.80},
+{cat:"学科",g:"四年级",asp:1056,rA:1130,rB:1515,cASP:887,crA:1013,crB:1363,m:.77,rf:.90,cm:.77,crf:.90,jr:.80},
+{cat:"学科",g:"五年级",asp:1056,rA:1130,rB:1515,cASP:887,crA:1013,crB:1363,m:.77,rf:.90,cm:.77,crf:.90,jr:.80},
+{cat:"学科",g:"六年级",asp:1056,rA:1092,rB:1492,cASP:887,crA:1009,crB:1410,m:.77,rf:.90,cm:.77,crf:.90,jr:.80}],
+"26春上9":[
+{cat:"学科",g:"一年级",asp:800,rA:778,rB:1055,cASP:null,crA:null,crB:null,m:.77,rf:null,cm:.77,crf:null,jr:.78},
+{cat:"学科",g:"二年级",asp:800,rA:910,rB:1272,cASP:688,crA:815,crB:1130,m:.77,rf:null,cm:.77,crf:null,jr:.78},
+{cat:"学科",g:"三年级",asp:945,rA:985,rB:1347,cASP:798,crA:883,crB:1197,m:.77,rf:null,cm:.77,crf:null,jr:.78},
+{cat:"学科",g:"四年级",asp:945,rA:985,rB:1347,cASP:798,crA:883,crB:1197,m:.77,rf:null,cm:.77,crf:null,jr:.78},
+{cat:"学科",g:"五年级",asp:945,rA:985,rB:1347,cASP:798,crA:883,crB:1197,m:.77,rf:null,cm:.77,crf:null,jr:.78},
+{cat:"学科",g:"六年级",asp:945,rA:977,rB:1352,cASP:798,crA:949,crB:1323,m:.77,rf:null,cm:.77,crf:null,jr:.78}],
+"26春下9":[
+{cat:"学科",g:"一年级",asp:800,rA:778,rB:1055,cASP:null,crA:null,crB:null,m:.77,rf:null,cm:.77,crf:null,jr:.78},
+{cat:"学科",g:"二年级",asp:800,rA:910,rB:1272,cASP:688,crA:815,crB:1130,m:.77,rf:null,cm:.77,crf:null,jr:.78},
+{cat:"学科",g:"三年级",asp:945,rA:985,rB:1347,cASP:798,crA:883,crB:1197,m:.77,rf:null,cm:.77,crf:null,jr:.78},
+{cat:"学科",g:"四年级",asp:945,rA:985,rB:1347,cASP:798,crA:883,crB:1197,m:.77,rf:null,cm:.77,crf:null,jr:.78},
+{cat:"学科",g:"五年级",asp:945,rA:985,rB:1347,cASP:798,crA:883,crB:1197,m:.77,rf:null,cm:.77,crf:null,jr:.78},
+{cat:"学科",g:"六年级",asp:945,rA:977,rB:1352,cASP:798,crA:949,crB:1323,m:.77,rf:null,cm:.77,crf:null,jr:.78}],
+"26春下12":[
+{cat:"学科",g:"一年级",asp:836,rA:819,rB:1162,cASP:null,crA:null,crB:null,m:.77,rf:null,cm:.77,crf:null,jr:.78},
+{cat:"学科",g:"二年级",asp:836,rA:1088,rB:1467,cASP:727,crA:975,crB:1320,m:.77,rf:null,cm:.77,crf:null,jr:.78},
+{cat:"学科",g:"三年级",asp:1056,rA:1088,rB:1467,cASP:887,crA:975,crB:1320,m:.77,rf:null,cm:.77,crf:null,jr:.78},
+{cat:"学科",g:"四年级",asp:1056,rA:1088,rB:1467,cASP:887,crA:975,crB:1320,m:.77,rf:null,cm:.77,crf:null,jr:.78},
+{cat:"学科",g:"五年级",asp:1056,rA:1088,rB:1443,cASP:887,crA:975,crB:1317,m:.77,rf:null,cm:.77,crf:null,jr:.78},
+{cat:"学科",g:"六年级",asp:1056,rA:782,rB:1126,cASP:887,crA:782,crB:1126,m:.77,rf:null,cm:.77,crf:null,jr:.78}],
+"26暑_新思维":[
+{cat:"新思维",g:"一年级",asp:2899,rA:1739,rB:3044,cASP:299,crA:650,crB:650,m:.84,rf:.84,cm:.84,crf:.84,jr:.80},
+{cat:"新思维",g:"二年级",asp:2899,rA:1739,rB:3044,cASP:299,crA:650,crB:650,m:.84,rf:.84,cm:.84,crf:.84,jr:.80},
+{cat:"新思维",g:"三年级",asp:2899,rA:1739,rB:3044,cASP:299,crA:650,crB:650,m:.84,rf:.84,cm:.84,crf:.84,jr:.80},
+{cat:"新思维",g:"四年级",asp:2899,rA:1739,rB:3044,cASP:299,crA:650,crB:650,m:.84,rf:.84,cm:.84,crf:.84,jr:.80},
+{cat:"新思维",g:"五年级",asp:2899,rA:1739,rB:3044,cASP:299,crA:650,crB:650,m:.84,rf:.84,cm:.84,crf:.84,jr:.80},
+{cat:"新思维",g:"六年级",asp:2899,rA:1739,rB:3044,cASP:299,crA:650,crB:650,m:.84,rf:.84,cm:.84,crf:.84,jr:.80}]};
+var last=null,sensitivityRows=[],sensitivityBest=-1,chartResizeTimer=null;
+function num(id){var v=Number(document.getElementById(id).value);return Number.isFinite(v)?v:0}
+function formatPercentInput(el){var v=Number(el.value);if(Number.isFinite(v))el.value=v.toFixed(2);calculate()}
+function fmtInt(v){return Math.round(v).toLocaleString("zh-CN")}
+function fmtRate(v,d){return(v*100).toFixed(d==null?2:d)+"%"}
+function detail(label,value,cls,total){return'<div class="d-row'+(total?' total':'')+'"><span>'+label+'</span><strong class="'+(cls||'')+'">'+value+'</strong></div>'}
+function renderParams(){
+ var rows=P[document.getElementById("season").value]||[],h="<thead><tr><th>类目</th><th>年级</th><th>学科ASP</th><th>续报ASP-A</th><th>续报ASP-B</th><th>耦合ASP</th><th>耦合续报A</th><th>耦合续报B</th><th>学科税后毛利</th><th>学科退费系数</th><th>耦合税后毛利</th><th>LPC排班率</th></tr></thead><tbody>";
+ rows.forEach(function(r){h+="<tr><td>"+r.cat+"</td><td>"+r.g+"</td><td>"+r.asp+"</td><td>"+r.rA+"</td><td>"+r.rB+"</td><td>"+(r.cASP==null?"—":r.cASP)+"</td><td>"+(r.crA==null?"—":r.crA)+"</td><td>"+(r.crB==null?"—":r.crB)+"</td><td>"+fmtRate(r.m,0)+"</td><td>"+(r.rf==null?"—":fmtRate(r.rf,2))+"</td><td>"+fmtRate(r.cm,0)+"</td><td>"+fmtRate(r.jr,2)+"</td></tr>"});
+ document.getElementById("paramsTable").innerHTML=h+"</tbody>"
+}
+function handleSeasonChange(){
+ renderParams();var rows=P[document.getElementById("season").value]||[],anchor=rows[1]||rows[0];
+ if(anchor){document.getElementById("margin").value=(anchor.m*100).toFixed(2);if(anchor.rf!=null)document.getElementById("refundFactor").value=(anchor.rf*100).toFixed(2);if(anchor.jr!=null)document.getElementById("joinRate").value=(anchor.jr*100).toFixed(2)}
+ var s=document.getElementById("season").value,note=s==="26秋上"?"暑1期—秋4期统一使用26秋上参数。":"当前展示"+s+"分年级参数。";if(anchor&&anchor.rf==null)note+=" 学科退费系数未配置，计算器保留当前手动值。";document.getElementById("paramsNote").textContent=note;calculate()
+}
+function getBlend(){
+ var rows=P[document.getElementById("season").value],g2=rows[1],high=rows.slice(2,6),p2=Math.max(0,Math.min(1,num("g2Share")/100)),each=(1-p2)/4;
+ function weighted(key){var total=(g2[key]||0)*p2;high.forEach(function(r){total+=(r[key]||0)*each});return total}
+ return{asp:weighted("asp"),cASP:weighted("cASP"),rA:weighted("rA"),crA:weighted("crA")}
+}
+function calculate(){
+ var p=getBlend(),examples=Math.max(num("exQty"),1),periods=Math.max(num("periods"),.01),conv=num("conversion")/100,margin=num("margin")/100,refund=num("refundFactor")/100,cRatio=num("couplingRate")/100,overlap=num("overlap"),eff=Math.max(num("efficiency"),.01),lead=num("leadIncome");
+ var sShare=1/(1+cRatio),cShare=cRatio/(1+cRatio),avgPrice=sShare*p.asp+cShare*p.cASP,output=conv*avgPrice,grossBeforeRefund=(sShare*(p.asp+p.rA)+cShare*(p.cASP+p.crA))*margin,grossAfterRefund=grossBeforeRefund*refund,ltvPv=grossAfterRefund*overlap,ltvIncome=ltvPv*conv+lead;
+ var joinRate=Math.max(num("joinRate")/100,.01),monthly=num("activeMonthly")+num("idleMonthly")*(1/joinRate-1),lpc=monthly/periods/eff,nonLpc=num("settlement")+num("material")+num("marketLabor")+num("marketRd"),cost=lpc+nonLpc,north=cost>0?ltvIncome/cost:0,head=examples/eff,profit=(ltvIncome-cost)*examples;
+ document.getElementById("exampleOutput").value=fmtInt(output);document.getElementById("subjectAsp").value=fmtInt(p.asp);document.getElementById("couplingAsp").value=fmtInt(p.cASP);document.getElementById("lpcMonthly").value=fmtInt(monthly);document.getElementById("lpcPerExample").value=fmtInt(lpc);document.getElementById("totalCostAuto").value=fmtInt(cost);
+ document.getElementById("northA").textContent=north.toFixed(3);document.getElementById("ltvIncome").textContent="¥"+fmtInt(ltvIncome);document.getElementById("totalCost").textContent="¥"+fmtInt(cost);document.getElementById("resultOutput").textContent="¥"+fmtInt(output);document.getElementById("resultConversion").textContent=fmtRate(conv,2);document.getElementById("headcount").textContent=fmtInt(head);document.getElementById("profit").textContent=fmtInt(profit/10000)+"万";
+ var ih="";ih+=detail("加权当前ASP（学科/耦合）","¥"+fmtInt(p.asp)+" / ¥"+fmtInt(p.cASP),"green");ih+=detail("加权续报ASP-A（学科/耦合）","¥"+fmtInt(p.rA)+" / ¥"+fmtInt(p.crA),"green");ih+=detail("（当前ASP＋续报ASP）×税后毛利率","¥"+fmtInt(grossBeforeRefund),"green");ih+=detail("× 学科退费系数 "+fmtRate(refund,2),"¥"+fmtInt(grossAfterRefund),"green");ih+=detail("× 收入重合系数 "+overlap.toFixed(3),"¥"+fmtInt(ltvPv),"green");ih+=detail("× 总PV转化率 "+fmtRate(conv,2),"¥"+fmtInt(ltvPv*conv),"green");ih+=detail("+ 例子拉新收入/例","¥"+fmtInt(lead));ih+=detail("LTV收入/例","¥"+fmtInt(ltvIncome),"green",true);document.getElementById("incomeDetail").innerHTML=ih;
+ var ch="";ch+=detail("排班LPC月成本","¥"+fmtInt(num("activeMonthly")));ch+=detail("未排班LPC月成本","¥"+fmtInt(num("idleMonthly")));ch+=detail("LPC排班率",fmtRate(joinRate,2));ch+=detail("LPC月综合人力成本","¥"+fmtInt(monthly),"orange");ch+=detail("÷ 月承接期次 ÷ 人效","¥"+fmtInt(lpc),"orange");ch+=detail("结算成本/例","¥"+fmtInt(num("settlement")));ch+=detail("实物+市场人力+市场产研","¥"+fmtInt(num("material")+num("marketLabor")+num("marketRd")));ch+=detail("单例总成本","¥"+fmtInt(cost),"orange",true);ch+=detail("北A = LTV收入 ÷ 单例总成本",north.toFixed(3),"green",true);document.getElementById("costDetail").innerHTML=ch;
+ last={examples:examples,eff:eff,conv:conv,output:output,ltvPv:ltvPv,lead:lead,nonLpc:nonLpc,monthly:monthly,periods:periods};calculateSensitivity()
+}
+function calculateSensitivity(){
+ if(!last)return;var slope=num("slope"),min=Math.max(num("effMin"),10),max=Math.max(num("effMax"),min),rows=[],best=-1,bestN=-Infinity;
+ for(var e=min;e<=max;e+=10){var out=Math.max(last.output+slope*(e-last.eff)/10,0),scale=last.output>0?out/last.output:0,cv=last.conv*scale,lpc=last.monthly/last.periods/e,cost=last.nonLpc+lpc,income=last.ltvPv*cv+last.lead,na=cost>0?income/cost:0,head=last.examples/e,human=out*e,gmv=out*last.examples;rows.push({e:e,out:out,cv:cv,lpc:lpc,cost:cost,income:income,na:na,head:head,human:human,gmv:gmv});if(na>bestN&&out>0){bestN=na;best=rows.length-1}}
+ var outMin=Math.min.apply(null,rows.map(function(r){return r.out})),outMax=Math.max.apply(null,rows.map(function(r){return r.out})),humanMin=Math.min.apply(null,rows.map(function(r){return r.human})),humanMax=Math.max.apply(null,rows.map(function(r){return r.human})),naMin=Math.min.apply(null,rows.map(function(r){return r.na})),naMax=Math.max.apply(null,rows.map(function(r){return r.na}));
+ function mixColor(a,b,t){return"rgb("+a.map(function(v,i){return Math.round(v+(b[i]-v)*t)}).join(",")+")"}
+ function scaleColor(v,minV,maxV,type){
+  var t=maxV>minV?(v-minV)/(maxV-minV):.5;
+  if(type==="blue")return mixColor([239,246,255],[147,197,253],t);
+  if(type==="purple")return mixColor([250,245,255],[196,181,253],t);
+  return t<.5?mixColor([254,202,202],[254,243,199],t*2):mixColor([254,243,199],[187,247,208],(t-.5)*2)
+ }
+ var h="";rows.forEach(function(r,i){h+='<tr class="'+(i===best?"best":"")+'"><td>'+fmtInt(r.e)+"</td><td>"+fmtInt(r.head)+"</td><td>"+fmtRate(r.cv,1)+'</td><td style="background:'+scaleColor(r.out,outMin,outMax,"blue")+';font-weight:700">'+fmtInt(r.out)+'</td><td style="background:'+scaleColor(r.human,humanMin,humanMax,"purple")+';font-weight:700">'+fmtInt(r.human)+"</td><td>"+fmtInt(r.gmv)+'</td><td style="background:'+scaleColor(r.na,naMin,naMax,"north")+';font-weight:700">'+r.na.toFixed(3)+"</td><td>¥"+fmtInt(r.lpc)+"</td><td>¥"+fmtInt(r.cost)+"</td><td>¥"+fmtInt(r.income)+"</td></tr>"});document.getElementById("sensBody").innerHTML=h;sensitivityRows=rows;sensitivityBest=best;renderSensitivityChart(rows,best)
+}
+function renderSensitivityChart(rows,best){
+ var canvas=document.getElementById("sensitivityChart");if(!canvas||!rows||!rows.length)return;
+ var box=canvas.getBoundingClientRect(),w=Math.max(box.width,320),h=Math.max(box.height,240),dpr=Math.min(window.devicePixelRatio||1,2),ctx=canvas.getContext("2d");canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+ var m={l:62,r:62,t:30,b:44},pw=w-m.l-m.r,ph=h-m.t-m.b,band=pw/rows.length,barW=Math.min(34,band*.56),outMax=Math.max.apply(null,rows.map(function(r){return r.out})),axisOut=Math.max(10,Math.ceil(outMax*1.12/10)*10),naMin=Math.min.apply(null,rows.map(function(r){return r.na})),naMax=Math.max.apply(null,rows.map(function(r){return r.na})),naPad=Math.max((naMax-naMin)*.20,.018),axisNaMin=Math.max(0,naMin-naPad),axisNaMax=naMax+naPad;
+ function x(i){return m.l+band*(i+.5)}function yOut(v){return m.t+ph*(1-v/axisOut)}function yNa(v){return m.t+ph*(1-(v-axisNaMin)/(axisNaMax-axisNaMin))}
+ function pill(cx,cy,text,fill,stroke,color){ctx.font='600 10px -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif';var tw=ctx.measureText(text).width,labelW=tw+12,labelH=18,px=Math.max(m.l+2,Math.min(cx-labelW/2,w-m.r-labelW-2)),py=Math.max(m.t+2,Math.min(cy-labelH/2,m.t+ph-labelH-2));ctx.beginPath();ctx.roundRect(px,py,labelW,labelH,5);ctx.fillStyle=fill;ctx.fill();ctx.strokeStyle=stroke;ctx.lineWidth=1;ctx.stroke();ctx.fillStyle=color;ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(text,px+labelW/2,py+labelH/2+.5)}
+ ctx.font='11px -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif';ctx.textBaseline="middle";
+ for(var t=0;t<=5;t++){var gy=m.t+ph*t/5,left=axisOut*(1-t/5),right=axisNaMax-(axisNaMax-axisNaMin)*t/5;ctx.strokeStyle="#e5eaf1";ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(m.l,gy);ctx.lineTo(w-m.r,gy);ctx.stroke();ctx.fillStyle="#697386";ctx.textAlign="right";ctx.fillText(fmtInt(left),m.l-8,gy);ctx.textAlign="left";ctx.fillText(right.toFixed(2),w-m.r+8,gy)}
+ ctx.strokeStyle="#aeb8c7";ctx.beginPath();ctx.moveTo(m.l,m.t);ctx.lineTo(m.l,m.t+ph);ctx.lineTo(w-m.r,m.t+ph);ctx.lineTo(w-m.r,m.t);ctx.stroke();
+ rows.forEach(function(r,i){var bx=x(i)-barW/2,by=yOut(r.out),bh=m.t+ph-by,grad=ctx.createLinearGradient(0,by,0,m.t+ph);grad.addColorStop(0,i===best?"#74b68a":"#7daef2");grad.addColorStop(1,i===best?"#d9f0e0":"#d8e7ff");ctx.fillStyle=grad;ctx.fillRect(bx,by,barW,bh);ctx.strokeStyle=i===best?"#3d8a59":"#6c9dde";ctx.strokeRect(bx+.5,by+.5,barW-1,Math.max(bh-1,0));if(band>=28||i%2===0||i===best||i===rows.length-1){ctx.fillStyle=i===best?"#174d2a":"#fff";ctx.font='700 10px -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif';ctx.textAlign="center";ctx.fillText(fmtInt(r.out),x(i),Math.min(by+13,m.t+ph-10))}ctx.fillStyle="#445166";ctx.font='11px -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif';ctx.textAlign="center";ctx.fillText(fmtInt(r.e),x(i),m.t+ph+20)});
+ ctx.strokeStyle="#d97706";ctx.lineWidth=2.5;ctx.lineJoin="round";ctx.lineCap="round";ctx.beginPath();rows.forEach(function(r,i){var px=x(i),py=yNa(r.na);if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py)});ctx.stroke();rows.forEach(function(r,i){var px=x(i),py=yNa(r.na);ctx.fillStyle=i===best?"#237a43":"#d97706";ctx.beginPath();ctx.arc(px,py,i===best?4.5:3.5,0,Math.PI*2);ctx.fill();ctx.strokeStyle="#fff";ctx.lineWidth=1.5;ctx.stroke()});
+ rows.forEach(function(r,i){if(band>=48||i%2===0||i===best||i===rows.length-1){var py=yNa(r.na),labelY=py-17;if(labelY<m.t+11)labelY=py+18;pill(x(i),labelY,r.na.toFixed(2),i===best?"#e8f6ed":"#fff7ed",i===best?"#7fbea0":"#f0b878",i===best?"#237a43":"#b45309")}});
+ ctx.fillStyle="#344563";ctx.font='600 11px -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif';ctx.textAlign="center";ctx.fillText("人效",m.l+pw/2,h-8);ctx.save();ctx.translate(14,m.t+ph/2);ctx.rotate(-Math.PI/2);ctx.fillText("预计例产（元/例）",0,0);ctx.restore();ctx.save();ctx.translate(w-14,m.t+ph/2);ctx.rotate(Math.PI/2);ctx.fillText("北极星A",0,0);ctx.restore()
+}
+function csvCell(value){var s=String(value==null?"":value);return/[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
+function downloadSensitivityCsv(){
+ if(!sensitivityRows.length)return;var headers=["人效","预计人数","预计PV转化率","预计例产","人产","总GMV产出","北极星A","LPC成本/例","单例总成本","LTV收入/例"],lines=[headers.map(csvCell).join(",")];sensitivityRows.forEach(function(r){lines.push([fmtInt(r.e),fmtInt(r.head),fmtRate(r.cv,2),fmtInt(r.out),fmtInt(r.human),fmtInt(r.gmv),r.na.toFixed(3),fmtInt(r.lpc),fmtInt(r.cost),fmtInt(r.income)].map(csvCell).join(","))});var blob=new Blob(["\uFEFF"+lines.join("\r\n")],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),season=document.getElementById("season").value.replace(/[^0-9A-Za-z\u4e00-\u9fa5_-]/g,"_");a.href=url;a.download="北极星A_预计例产与成本敏感性_"+season+".csv";document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(url)},0)
+}
+window.addEventListener("resize",function(){clearTimeout(chartResizeTimer);chartResizeTimer=setTimeout(function(){renderSensitivityChart(sensitivityRows,sensitivityBest)},120)});
+handleSeasonChange();
+</script>
+</body>
+</html>

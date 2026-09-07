@@ -16,12 +16,28 @@
     if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',replace,{once:true});
     else replace();
   }
+  function clearSaved(){
+    try{localStorage.removeItem(KEY);}catch{}
+    try{sessionStorage.removeItem(KEY);}catch{}
+  }
+  function loadSaved(){
+    for(const storage of [localStorage,sessionStorage]){
+      try{
+        const saved=JSON.parse(storage.getItem(KEY));
+        if(!saved)continue;
+        if(saved.version!==payload.salt||!Number.isFinite(saved.expires)||saved.expires<=Date.now()||saved.expires>Date.now()+8*3600000){storage.removeItem(KEY);continue;}
+        // Migrate an existing same-tab session so subsequent report pages and tabs can reuse it.
+        if(storage===sessionStorage){localStorage.setItem(KEY,JSON.stringify(saved));sessionStorage.removeItem(KEY);}
+        return saved;
+      }catch{try{storage.removeItem(KEY);}catch{}}
+    }
+    return null;
+  }
   async function resume(){
     try{
-      const saved=JSON.parse(sessionStorage.getItem(KEY));
-      if(saved?.version!==payload.salt||!Number.isFinite(saved.expires)||saved.expires<=Date.now()||saved.expires>Date.now()+8*3600000)return;
-      display(await open(bytes(saved.key)));
-    }catch{sessionStorage.removeItem(KEY);}
+      const saved=loadSaved();
+      if(saved)display(await open(bytes(saved.key)));
+    }catch{clearSaved();}
   }
   form.addEventListener('submit',async event=>{
     event.preventDefault();if(button.disabled)return;button.disabled=true;error.textContent='正在验证…';
@@ -30,7 +46,8 @@
       const raw=await crypto.subtle.deriveBits({name:'PBKDF2',salt:bytes(payload.salt),iterations:payload.iterations,hash:'SHA-256'},material,256);
       const html=await open(raw);
       input.value='';
-      sessionStorage.setItem(KEY,JSON.stringify({version:payload.salt,key:encode(raw),expires:Date.now()+8*3600000}));
+      localStorage.setItem(KEY,JSON.stringify({version:payload.salt,key:encode(raw),expires:Date.now()+8*3600000}));
+      try{sessionStorage.removeItem(KEY);}catch{}
       display(html);
     }catch{error.textContent='密码不正确或文件加载异常，请重新输入。';input.value='';input.focus();}
     finally{button.disabled=false;}

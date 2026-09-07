@@ -198,7 +198,7 @@ recalcStaff=function(){
   const errors=validatePlan();
   if(errors.length&&$("staffRows").rows.length){
     $("staffTotals").innerHTML='<div class="wb-note wb-error">'+esc(errors.slice(0,4).join("；"))+'。请修正输入后再测算。</div>';
-    $("plans").innerHTML="";$("staffRows").querySelectorAll(".out,.need,.north,.gmv,.profit,.lpcCost,.totalCost,.ltvIncome").forEach(el=>el.textContent="—");return;
+    $("plans").innerHTML="";$("staffRows").querySelectorAll(".out,.need,.north,.humanProduction,.gmv,.profit,.lpcCost,.totalCost,.ltvIncome").forEach(el=>el.textContent="—");return;
   }
   previousRecalc();
 };

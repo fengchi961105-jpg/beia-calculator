@@ -122,7 +122,7 @@
       <div class="chart-canvas-wrap"><canvas id="sensitivityChart" role="img" aria-label="横轴为人效，柱状图为预计例产，折线图为北极星A"></canvas></div>
       <p class="chart-note">左轴：预计例产（元/例）；右轴：北极星A。图表随上方参数与计算器输入自动更新。</p>
     </div>
-    <div class="table-actions"><h3>敏感性明细</h3><button class="download-btn" type="button" onclick="downloadSensitivityCsv()">下载明细 CSV</button></div>
+    <div class="table-actions"><h3>敏感性明细</h3><div><button class="download-btn" type="button" onclick="downloadSensitivityPng()">下载敏感性图 PNG</button> <button class="download-btn" type="button" onclick="downloadSensitivityCsv()">下载明细 CSV</button></div></div>
     <div class="table-wrap"><table class="sens-table"><thead><tr><th>人效</th><th>预计人数</th><th>预计PV转化率</th><th>预计例产</th><th>人产</th><th>总GMV产出</th><th>北极星A</th><th>LPC成本/例</th><th>单例总成本</th><th>LTV收入/例</th></tr></thead><tbody id="sensBody"></tbody></table></div>
     <div class="usage"><h3>使用说明</h3><ol><li>先选择售卖品和拉新品，系统会自动带入ASP、渠道成本、承接周期、斜率及秋季87%排班率。</li><li>日常排班只需修改：例子量、当前例产、当前人效、二年级占比和当期结算成本；其余参数无需记忆。</li><li>四周转按每月1期、双周转按每月2期、单周转按每月4期分摊LPC成本。</li><li>三至六年级默认平分扣除二年级后的剩余占比；金额和数量按整数展示，北极星A保留3位。</li><li>OK转学科暂按同类四周品参数预置，取得独立成本与斜率后应替换。</li><li>参数来源：<a href="https://docs.yukework.com/doc?fileId=1872221674903367682" target="_blank" rel="noopener noreferrer">各学季北极星参数表</a>。</li></ol>
       <div class="formula">北A = LTV收入/例 ÷ 单例总成本；学科退费系数 = 1－退费率，并同时作用于当前ASP与续报ASP；耦合率=耦合PV÷学科PV；LPC月综合人力成本=排班月成本+未排班月成本×(1÷LPC排班率－1)；LPC人力成本/例=LPC月综合人力成本÷月承接期次÷人效。</div>
@@ -130,7 +130,7 @@
   </section>
 </main>
 
-<script src="channel-defaults.js"></script><script>
+<script src="channel-defaults.js"></script><script src="product-defaults.js"></script><script src="product-options.js"></script><script>
 var P={
 "26秋上":[
 {cat:"学科",g:"一年级",asp:850,rA:823,rB:1116,cASP:null,crA:null,crB:null,m:.77,rf:.85,cm:.77,crf:.85,jr:.80},
@@ -195,6 +195,10 @@ var P={
 {cat:"新思维",g:"四年级",asp:2499,rA:1720.1,rB:2549.6,cASP:null,crA:null,crB:null,m:.84,rf:.84,cm:.84,crf:.84,jr:.85},
 {cat:"新思维",g:"五年级",asp:2499,rA:1720.1,rB:2549.6,cASP:null,crA:null,crB:null,m:.84,rf:.84,cm:.84,crf:.84,jr:.85},
 {cat:"新思维",g:"六年级",asp:2499,rA:1720.1,rB:2549.6,cASP:null,crA:null,crB:null,m:.84,rf:.84,cm:.84,crf:.84,jr:.85}]};
+P=globalThis.BEIA_PRODUCT_DEFAULTS||P;
+var PRODUCT_OPTIONS=globalThis.BEIA_PRODUCT_OPTIONS||Object.keys(P).map(function(value){return{value:value,label:value}}),seasonSelect=document.getElementById("season");
+seasonSelect.innerHTML=PRODUCT_OPTIONS.filter(function(item){return P[item.value]}).map(function(item){return'<option value="'+item.value+'">'+item.label+'</option>'}).join("");
+seasonSelect.value=P["26秋下12"]?"26秋下12":PRODUCT_OPTIONS[0].value;
 function channelPreset(c){return Object.assign({},c,{cycle:c.periods===1?"四周转":c.periods===4?"单周转":"双周转",settlement:c.settle,output:c.baseOutput})}
 var CHANNEL_DEFAULTS=Object.fromEntries(BEIA_CHANNEL_DEFAULTS.channels.map(c=>[c.name,channelPreset(c)]));
 document.getElementById("leadProduct").innerHTML=BEIA_CHANNEL_DEFAULTS.channels.map(c=>"<option>"+c.name+"</option>").join("")+"<option>测试渠道</option>";
@@ -256,7 +260,7 @@ function calculateSensitivity(){
 }
 function renderSensitivityChart(rows,best){
  var canvas=document.getElementById("sensitivityChart");if(!canvas||!rows||!rows.length)return;
- var box=canvas.getBoundingClientRect(),w=Math.max(box.width,320),h=Math.max(box.height,240),dpr=Math.min(window.devicePixelRatio||1,2),ctx=canvas.getContext("2d");canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+ var box=canvas.getBoundingClientRect(),w=Math.max(Math.round(box.width),320),h=Math.max(Math.round(box.height),240),dpr=Math.max(1,Math.min(window.devicePixelRatio||1,3)),ctx=canvas.getContext("2d");canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
  var m={l:62,r:62,t:30,b:44},pw=w-m.l-m.r,ph=h-m.t-m.b,band=pw/rows.length,barW=Math.min(34,band*.56),outMax=Math.max.apply(null,rows.map(function(r){return r.out})),axisOut=Math.max(10,Math.ceil(outMax*1.12/10)*10),naMin=Math.min.apply(null,rows.map(function(r){return r.na})),naMax=Math.max.apply(null,rows.map(function(r){return r.na})),naPad=Math.max((naMax-naMin)*.20,.018),axisNaMin=Math.max(0,naMin-naPad),axisNaMax=naMax+naPad;
  function x(i){return m.l+band*(i+.5)}function yOut(v){return m.t+ph*(1-v/axisOut)}function yNa(v){return m.t+ph*(1-(v-axisNaMin)/(axisNaMax-axisNaMin))}
  function pill(cx,cy,text,fill,stroke,color){ctx.font='600 10px -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif';var tw=ctx.measureText(text).width,labelW=tw+12,labelH=18,px=Math.max(m.l+2,Math.min(cx-labelW/2,w-m.r-labelW-2)),py=Math.max(m.t+2,Math.min(cy-labelH/2,m.t+ph-labelH-2));ctx.beginPath();ctx.roundRect(px,py,labelW,labelH,5);ctx.fillStyle=fill;ctx.fill();ctx.strokeStyle=stroke;ctx.lineWidth=1;ctx.stroke();ctx.fillStyle=color;ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(text,px+labelW/2,py+labelH/2+.5)}
@@ -272,6 +276,9 @@ function csvCell(value){var s=String(value==null?"":value);return/[",\n]/.test(s
 function downloadSensitivityCsv(){
  if(!sensitivityRows.length)return;var headers=["人效","预计人数","预计PV转化率","预计例产","人产","总GMV产出","北极星A","LPC成本/例","单例总成本","LTV收入/例"],lines=[headers.map(csvCell).join(",")];sensitivityRows.forEach(function(r){lines.push([fmtInt(r.e),fmtInt(r.head),fmtRate(r.cv,2),fmtInt(r.out),fmtInt(r.human),fmtInt(r.gmv),r.na.toFixed(3),fmtInt(r.lpc),fmtInt(r.cost),fmtInt(r.income)].map(csvCell).join(","))});var blob=new Blob(["\uFEFF"+lines.join("\r\n")],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a"),season=document.getElementById("season").value.replace(/[^0-9A-Za-z\u4e00-\u9fa5_-]/g,"_");a.href=url;a.download="北极星A_预计例产与成本敏感性_"+season+".csv";document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(url)},0)
 }
+function downloadSensitivityPng(){
+ scheduleSensitivityRedraw();requestAnimationFrame(function(){requestAnimationFrame(function(){var source=document.getElementById("sensitivityChart"),copy=document.createElement("canvas"),scale=Math.max(2,Math.min(window.devicePixelRatio||1,3));copy.width=Math.round(source.clientWidth*scale);copy.height=Math.round(source.clientHeight*scale);var ctx=copy.getContext("2d");ctx.fillStyle="#fbfcfe";ctx.fillRect(0,0,copy.width,copy.height);ctx.drawImage(source,0,0,copy.width,copy.height);copy.toBlob(function(blob){if(!blob)return;var url=URL.createObjectURL(blob),a=document.createElement("a"),season=document.getElementById("season").value.replace(/[^0-9A-Za-z\u4e00-\u9fa5_-]/g,"_");a.href=url;a.download="北极星A_预计例产与成本敏感性_"+season+".png";document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url)},0)},"image/png")})})
+}
 function downloadPagePng(){
  calculate();var status=document.createElement("div");status.className="capture-status";status.textContent="正在生成结果截图…";document.body.appendChild(status);
  try{var c=document.createElement("canvas"),w=1500,h=1080,dpr=2;c.width=w*dpr;c.height=h*dpr;var x=c.getContext("2d");x.scale(dpr,dpr);x.fillStyle="#f7f8fb";x.fillRect(0,0,w,h);x.textBaseline="middle";
@@ -285,10 +292,15 @@ function downloadPagePng(){
   c.toBlob(function(blob){var url=URL.createObjectURL(blob),a=document.createElement("a"),season=document.getElementById("season").value.replace(/[^0-9A-Za-z\u4e00-\u9fa5_-]/g,"_");a.href=url;a.download="北极星A计算结果_"+season+".png";document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);status.remove()},1000)},"image/png")
  }catch(error){status.textContent="截图生成失败，请刷新页面后重试";setTimeout(function(){status.remove()},3000)}
 }
-window.addEventListener("resize",function(){clearTimeout(chartResizeTimer);chartResizeTimer=setTimeout(function(){renderSensitivityChart(sensitivityRows,sensitivityBest)},120)});
+function scheduleSensitivityRedraw(){clearTimeout(chartResizeTimer);chartResizeTimer=setTimeout(function(){requestAnimationFrame(function(){requestAnimationFrame(function(){renderSensitivityChart(sensitivityRows,sensitivityBest)})})},40)}
+window.addEventListener("resize",scheduleSensitivityRedraw);
+window.addEventListener("load",scheduleSensitivityRedraw);
+window.addEventListener("pageshow",scheduleSensitivityRedraw);
+document.addEventListener("visibilitychange",function(){if(!document.hidden)scheduleSensitivityRedraw()});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(scheduleSensitivityRedraw);
 window.addEventListener("message",function(event){var data=event.data;if(data&&data.type==="BEIA_REDRAW"){calculate();requestAnimationFrame(function(){renderSensitivityChart(sensitivityRows,sensitivityBest)});return}if(!data||data.type!=="BEIA_SHARED_CONFIG"||!Array.isArray(data.channels))return;if(Array.isArray(data.products)&&data.products.length){P={};var seasonSelect=document.getElementById("season");seasonSelect.innerHTML="";data.products.forEach(function(p){P[p.id]=p.rows;var o=document.createElement("option");o.value=p.id;o.textContent=p.label;seasonSelect.appendChild(o)})}var select=document.getElementById("leadProduct"),selected=select.value;select.innerHTML="";data.channels.forEach(function(c){if(!c||!c.name)return;CHANNEL_DEFAULTS[c.name]=channelPreset(c);var option=document.createElement("option");option.textContent=c.name;option.value=c.name;select.appendChild(option)});var test=document.createElement("option");test.textContent="测试渠道";test.value="测试渠道";select.appendChild(test);if(Array.from(select.options).some(function(o){return o.value===selected}))select.value=selected;if(data.defaultSeason&&Array.from(document.getElementById("season").options).some(function(o){return o.value===data.defaultSeason}))document.getElementById("season").value=data.defaultSeason;handleSeasonChange();handleChannelChange();requestAnimationFrame(function(){renderSensitivityChart(sensitivityRows,sensitivityBest)})});
-if(window.ResizeObserver){new ResizeObserver(function(){clearTimeout(chartResizeTimer);chartResizeTimer=setTimeout(function(){renderSensitivityChart(sensitivityRows,sensitivityBest)},80)}).observe(document.querySelector(".chart-canvas-wrap"))}
-handleSeasonChange();handleChannelChange();
+if(window.ResizeObserver){new ResizeObserver(scheduleSensitivityRedraw).observe(document.querySelector(".chart-canvas-wrap"))}
+handleSeasonChange();handleChannelChange();scheduleSensitivityRedraw();
 </script>
 </body>
 </html>

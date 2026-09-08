@@ -10,6 +10,8 @@
     return new TextDecoder().decode(plain);
   }
   function display(html){
+    // Keep the existing encrypted reports' exit control aligned with shared browser storage.
+    html=html.replace("sessionStorage.removeItem('workbench_analysis_session_v1');location.reload()","localStorage.removeItem('workbench_analysis_session_v1');sessionStorage.removeItem('workbench_analysis_session_v1');location.reload()").replace("sessionStorage.getItem('workbench_analysis_session_v1')","localStorage.getItem('workbench_analysis_session_v1')");
     // Wait for the encrypted wrapper's parser to finish before replacing it.
     // Otherwise automatic session restore can append the report below the gate.
     const replace=()=>setTimeout(()=>{document.open();document.write(html);document.close();},0);

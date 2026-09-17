@@ -1,6 +1,7 @@
 /* Version snapshots and product maintenance extend, rather than replace, the three existing pages. */
 const VERSION_KEY="beia_plan_versions_v1";
 const productFields=[["asp","学科ASP"],["rA","续报ASP-A"],["rB","续报ASP-B"],["cASP","耦合ASP"],["crA","耦合续报A"],["crB","耦合续报B"]];
+const smartParameter=value=>{const n=Number(value);return Number.isFinite(n)?(Number.isInteger(n)?String(n):n.toFixed(1)):""};
 const originalNormalize=normalizeState;
 normalizeState=function(s){
   const result=originalNormalize(s);
@@ -27,10 +28,10 @@ style.textContent=".workbench{margin-top:24px;padding:24px;border:1px solid #dbe
 document.head.appendChild(style);
 const productPanel=document.createElement("div");
 productPanel.className="workbench";productPanel.id="productCenter";
-productPanel.innerHTML='<h3>售卖品参数中心</h3><p>维护一至六年级ASP和续报ASP；北A使用续报A，续报B保留用于参数核对。耦合字段留空时沿用学科值。退费、毛利与排班成本仍以各渠道参数为准。</p><div class="wb-toolbar"><select id="productEditor"></select><input id="productLabel" aria-label="售卖品名称"><button class="btn" id="copyProduct">复制售卖品</button><button class="btn danger" id="removeProduct">删除售卖品</button><button class="btn" id="exportProducts">下载售卖品参数</button><button class="btn" id="importProducts">导入售卖品参数</button><input type="file" id="productFile" accept=".json" hidden></div><div class="wb-scroll"><table><thead><tr><th>年级</th>'+productFields.map(x=>'<th>'+x[1]+'（元）</th>').join("")+'</tr></thead><tbody id="productRows"></tbody></table></div><div class="wb-status" id="productStatus">修改后与渠道参数一起命名保存，再应用到测算页面。</div>';
+productPanel.innerHTML='<h3>售卖品参数中心</h3><p>维护一至六年级ASP和续报ASP，并维护售卖品默认毛利率、退费系数。选择售卖品时系统自动带出默认值，本期测算仍可修改。</p><div class="wb-toolbar"><select id="productEditor"></select><input id="productLabel" aria-label="售卖品名称"><label>默认税后毛利率（%）<input id="productMargin" type="number" min="0" max="100" step="0.1"></label><label>默认退费系数（%）<input id="productRefund" type="number" min="0" max="100" step="0.1"></label><button class="btn" id="copyProduct">复制售卖品</button><button class="btn danger" id="removeProduct">删除售卖品</button><button class="btn" id="exportProducts">下载售卖品参数</button><button class="btn" id="importProducts">导入售卖品参数</button><input type="file" id="productFile" accept=".json" hidden></div><div class="wb-scroll"><table><thead><tr><th>年级</th>'+productFields.map(x=>'<th>'+x[1]+'（元）</th>').join("")+'</tr></thead><tbody id="productRows"></tbody></table></div><div class="wb-status" id="productStatus">默认值只负责初始化；每一期可在计算器和排班方案中覆盖。</div>';
 $("params").appendChild(productPanel);
 const gatePanel=document.createElement("div");gatePanel.className="workbench";gatePanel.id="releaseGate";
-gatePanel.innerHTML='<h3>发布前校验</h3><p>检查参数完整性、取值范围、名称重复及相对默认模版的变化。校验通过不代表预测必然实现；斜率与转化仍需要经营数据支持。</p><div class="wb-toolbar"><button class="btn" id="runValidation">检查当前参数</button><span>公式版本：'+BeiaValidation.formulaVersion+'</span></div><div id="validationResults" class="wb-note">应用、保存或发布前自动检查；有错误时禁止提交。</div>';
+gatePanel.innerHTML='<h3>参数检查</h3><p>保存或发布前，系统会检查缺失参数、异常取值、重复名称和相对默认模版的变化。检查通过只代表参数可以正常计算，不代表经营结果一定实现。</p><div class="wb-toolbar"><button class="btn" id="runValidation">立即检查</button><span title="内部规则编号：'+BeiaValidation.formulaVersion+'">当前计算规则：2026年9月版</span></div><div id="validationResults" class="wb-note">应用、保存或发布时也会自动检查；如有错误，会提示具体渠道和字段。</div>';
 $("params").appendChild(gatePanel);
 let selectedProduct="";
 function renderProductCenter(){
@@ -39,10 +40,14 @@ function renderProductCenter(){
   $("productEditor").value=selectedProduct;
   const p=state.products.find(p=>p.id===selectedProduct);if(!p)return;
   const locked=isDefaultTemplate();$("productLabel").value=p.label;$("productLabel").readOnly=locked;
-  $("productRows").innerHTML=p.rows.map((r,i)=>'<tr><td>'+esc(r.g)+'</td>'+productFields.map(([k])=>'<td><input type="number" step="any" min="0" data-grade="'+i+'" data-field="'+k+'" value="'+(r[k]??"")+'" '+(locked?"readonly":"")+'></td>').join("")+'</tr>').join("");
+  $("productMargin").value=smartParameter((p.rows[0]?.m==null ? .77 : Number(p.rows[0].m))*100);$("productRefund").value=smartParameter((p.rows[0]?.rf==null ? .90 : Number(p.rows[0].rf))*100);$("productMargin").readOnly=locked;$("productRefund").readOnly=locked;
+  $("productRows").innerHTML=p.rows.map((r,i)=>'<tr><td>'+esc(r.g)+'</td>'+productFields.map(([k])=>'<td><input type="number" step="any" min="0" data-grade="'+i+'" data-field="'+k+'" value="'+(r[k]==null?"":smartParameter(r[k]))+'" '+(locked?"readonly":"")+'></td>').join("")+'</tr>').join("");
   $("copyProduct").disabled=locked;$("removeProduct").disabled=locked;
   $("productRows").querySelectorAll("input").forEach(input=>input.oninput=()=>{p.rows[+input.dataset.grade][input.dataset.field]=input.value===""?(input.dataset.field.startsWith("c")?null:NaN):Number(input.value);$("productStatus").textContent="售卖品参数已修改，尚未应用。请保存或应用当前参数模版。"});
 }
+function updateProductRate(key,value){if(isDefaultTemplate())return;const p=state.products.find(p=>p.id===selectedProduct),v=Number(value);if(!p||!Number.isFinite(v)||v<0||v>100)return;p.rows.forEach(r=>{r[key]=v/100;if(key==="m")r.cm=v/100;if(key==="rf")r.crf=v/100});$("productStatus").textContent="售卖品默认毛利率/退费系数已修改，尚未应用。"}
+$("productMargin").oninput=e=>updateProductRate("m",e.target.value);
+$("productRefund").oninput=e=>updateProductRate("rf",e.target.value);
 const originalFillParams=fillParams;
 fillParams=function(){originalFillParams();renderProductCenter()};
 $("productEditor").onchange=()=>{selectedProduct=$("productEditor").value;renderProductCenter()};
@@ -68,7 +73,7 @@ function configDifferences(){
   const changes=[];const base=normalizeState(globalState);
   state.channels.forEach(c=>{const old=base.channels.find(x=>x.name===c.name);if(!old){changes.push("新增渠道："+c.name);return}PARAM_FIELDS.forEach(k=>{if(c[k]!==old[k])changes.push(c.name+" · "+PARAM_HEADERS[PARAM_FIELDS.indexOf(k)+1]+"："+old[k]+" → "+c[k])})});
   base.channels.filter(c=>!state.channels.some(x=>x.name===c.name)).forEach(c=>changes.push("删除渠道："+c.name));
-  state.products.forEach(p=>{const old=base.products.find(x=>x.id===p.id);if(!old){changes.push("新增售卖品："+p.label);return}p.rows.forEach((r,i)=>productFields.forEach(([k,label])=>{if(r[k]!==old.rows[i][k])changes.push(p.label+" "+r.g+" "+label+"："+old.rows[i][k]+" → "+r[k])}))});
+  state.products.forEach(p=>{const old=base.products.find(x=>x.id===p.id);if(!old){changes.push("新增售卖品："+p.label);return}p.rows.forEach((r,i)=>{[...productFields,["m","税后毛利率"],["rf","退费系数"]].forEach(([k,label])=>{if(r[k]!==old.rows[i][k])changes.push(p.label+" "+r.g+" "+label+"："+old.rows[i][k]+" → "+r[k])})})});
   base.products.filter(p=>!state.products.some(x=>x.id===p.id)).forEach(p=>changes.push("删除售卖品："+p.label));
   if(state.settings.defaultSeason!==base.settings.defaultSeason)changes.push("默认售卖品："+base.settings.defaultSeason+" → "+state.settings.defaultSeason);
   return changes;
@@ -186,7 +191,7 @@ renderPlans=function(...args){
     button.onclick=()=>{
       if(!confirm("用此候选方案替换当前承接量与人效？建议先保存当前版本。"))return;
       const plan=lastPlans[i];captureStaffDraft(false);
-      plan.rows.forEach(r=>staffDraft.rows[r.c.name]={vol:r.reported,take:r.volume,eff:r.eff});
+      plan.rows.forEach(r=>staffDraft.rows[r.c.name]={product:r.product,vol:r.reported,take:r.volume,eff:r.eff,margin:r.margin,refund:r.refund});
       localStorage.setItem(PLAN_KEY,JSON.stringify(staffDraft));fillStaff();
       $("versionName").value=$("sPeriod").value+" · "+plan.name;
       $("versionStatus").textContent="候选方案已载入，请核对各渠道变化后保存版本；候选搜索不等于全局最优。";
@@ -217,7 +222,7 @@ jump.innerHTML='<button class="btn" type="button">查看已保存版本与对比
 jump.firstChild.onclick=()=>$("versionCenter").scrollIntoView({behavior:"smooth",block:"start"});
 $("staff").prepend(jump);
 const productJump=document.createElement("div");productJump.className="wb-toolbar";
-productJump.innerHTML='<button class="btn" type="button">售卖品ASP参数</button><button class="btn" type="button">发布前校验</button>';
+productJump.innerHTML='<button class="btn" type="button">售卖品ASP参数</button><button class="btn" type="button">参数检查</button>';
 productJump.children[0].onclick=()=>$("productCenter").scrollIntoView({behavior:"smooth",block:"start"});
 productJump.children[1].onclick=()=>{inspectConfig();$("releaseGate").scrollIntoView({behavior:"smooth",block:"start"})};
 $("params").prepend(productJump);

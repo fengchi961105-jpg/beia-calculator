@@ -11,7 +11,8 @@
       if(!name||names.has(name))errors.push(prefix+"：渠道名称为空或重复");names.add(name);
       ["baseEff","periods"].forEach(k=>number(c[k],prefix+" / "+k,0.01));
       ["baseOutput","lead","settle","material","labor","rd","active","idle","coupling"].forEach(k=>number(c[k],prefix+" / "+k));
-      ["g2","refund","margin"].forEach(k=>number(c[k],prefix+" / "+k,0,100));
+      ["g1","g2","refund","margin"].forEach(k=>number(c[k],prefix+" / "+k,0,100));
+      if(c.g1+c.g2>100)errors.push(prefix+"：一年级占比与二年级占比合计不能超过100%");
       number(c.rate,prefix+" / 排班率",0.01,100);
       number(c.overlap,prefix+" / 收入重合系数",0,1);
       number(c.slope,prefix+" / 斜率",-10000,10000);
@@ -30,10 +31,13 @@
         number(r.asp,p.label+" / "+(i+1)+"年级 ASP",0.01);
         ["rA","rB"].forEach(k=>number(r[k],p.label+" / "+(i+1)+"年级 "+k));
         ["cASP","crA","crB"].forEach(k=>{if(r[k]!==null)number(r[k],p.label+" / "+(i+1)+"年级 "+k)});
+        ["m","rf"].forEach(k=>{if(r[k]!==null&&r[k]!==undefined)number(r[k],p.label+" / "+(i+1)+"年级 "+(k==="m"?"税后毛利率":"退费系数"),0,1)});
+        ["cm","crf"].forEach(k=>{if(r[k]!==null&&r[k]!==undefined)number(r[k],p.label+" / "+(i+1)+"年级 "+k,0,1)});
       });
     });
     if(!ids.has(s.settings?.defaultSeason))errors.push("默认售卖品不在售卖品参数中心");
+    s.channels.forEach(c=>{if(c&&typeof c==="object"&&!ids.has(c.product))errors.push((c.name||"渠道")+"：默认售卖品不在售卖品参数中心")});
     return {errors,warnings};
   }
-  root.BeiaValidation={validateConfig,formulaVersion:"north-a-2026-09-v1"};
+  root.BeiaValidation={validateConfig,formulaVersion:"north-a-2026-09-v3"};
 })(globalThis);

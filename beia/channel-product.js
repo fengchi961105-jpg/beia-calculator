@@ -100,10 +100,12 @@
 
   const style=document.createElement("style");style.textContent='#paramRows select,.staff-table select.product{min-width:150px;height:34px;border:1px solid #cdd7e5;border-radius:7px;padding:5px 8px;background:#fff;color:#26364b}.staff-table select.product,.staff-table input.margin,.staff-table input.refund{background:var(--input);border-color:#e7b94a}.staff-table{min-width:2470px!important}#params .template-panel{grid-template-columns:260px minmax(0,1fr)}';document.head.appendChild(style);
   rebuildHeaders();
-  state=normalizeState(state);globalState=normalizeState(globalState);if(appliedState)appliedState=normalizeState(appliedState);
-  const validNames=new Set(activeConfig().channels.map(c=>c.name));
-  if(Array.isArray(staffDraft.selected))staffDraft.selected=staffDraft.selected.filter(name=>validNames.has(name));
-  Object.keys(staffDraft.rows||{}).forEach(name=>{if(!validNames.has(name))delete staffDraft.rows[name]});
-  localStorage.setItem(PLAN_KEY,JSON.stringify(staffDraft));
-  setTimeout(()=>{rebuildHeaders();init();$("downloadPlan").onclick=downloadPlan},0);
+  Promise.resolve(globalThis.beiaLoadPromise).then(()=>{
+    state=normalizeState(state);globalState=normalizeState(globalState);if(appliedState)appliedState=normalizeState(appliedState);
+    const validNames=new Set(activeConfig().channels.map(c=>c.name));
+    if(Array.isArray(staffDraft.selected))staffDraft.selected=staffDraft.selected.filter(name=>validNames.has(name));
+    Object.keys(staffDraft.rows||{}).forEach(name=>{if(!validNames.has(name))delete staffDraft.rows[name]});
+    localStorage.setItem(PLAN_KEY,JSON.stringify(staffDraft));
+    rebuildHeaders();init();$("downloadPlan").onclick=downloadPlan;
+  });
 })();

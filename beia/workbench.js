@@ -226,4 +226,4 @@ productJump.innerHTML='<button class="btn" type="button">售卖品ASP参数</but
 productJump.children[0].onclick=()=>$("productCenter").scrollIntoView({behavior:"smooth",block:"start"});
 productJump.children[1].onclick=()=>{inspectConfig();$("releaseGate").scrollIntoView({behavior:"smooth",block:"start"})};
 $("params").prepend(productJump);
-load();
+globalThis.beiaLoadPromise=load();

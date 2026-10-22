@@ -4,7 +4,7 @@
   normalize=function(c){
     const source=c||{},out=previousNormalizeChannel(source),preset=DEFAULTS.channels.find(x=>x.name===source.name);
     out.g1=Number.isFinite(Number(source.g1))?Number(source.g1):0;
-    out.product=source.product||preset?.product||state?.settings?.defaultSeason||"26秋下12";
+    out.product=source.product||preset?.product||state?.settings?.defaultSeason||"26秋下9";
     return out;
   };
   const previousNormalizeState=normalizeState;
@@ -176,7 +176,7 @@
     lines.push(total.map(csvCell).join(","));downloadBlob(`${$("sPeriod").value}_承接排班方案.csv`,"\ufeff"+lines.join("\r\n"));
   };
 
-  const style=document.createElement("style");style.textContent='#paramRows select,.staff-table select.product{min-width:150px;height:34px;border:1px solid #cdd7e5;border-radius:7px;padding:5px 8px;background:#fff;color:#26364b}.staff-table select.product,.staff-table input.margin,.staff-table input.refund{background:var(--input);border-color:#e7b94a}.staff-table{min-width:2470px!important}#params .template-panel{grid-template-columns:260px minmax(0,1fr)}#params th.review-param{color:#b52f35;background:#fff0f0}#params td.review-param input,#params td.review-param select,#params.locked-default td.review-param input,#params.locked-default td.review-param select{color:#c43d42!important;font-weight:750}.param-review-note{color:#b52f35!important;font-weight:750}#plans[hidden]{display:none!important}.staff-table tfoot td{padding:12px 9px;border-top:2px solid #aebed5;background:#edf3fb;color:#203552;font-weight:800;text-align:right;white-space:nowrap}.staff-table tfoot .sticky-col{position:sticky;left:0;z-index:4;text-align:left;background:#e5eefb}.formula-card.total{border-top:3px solid #2c879a}.formula-card.total .formula-index{background:#e4f5f7;color:#17677a}';document.head.appendChild(style);
+  const style=document.createElement("style");style.textContent='#paramRows select,.staff-table select.product{min-width:150px;height:34px;border:1px solid #cdd7e5;border-radius:7px;padding:5px 8px;background:#fff;color:#26364b}.staff-table select.product,.staff-table input.margin,.staff-table input.refund{background:var(--input);border-color:#e7b94a}.staff-table{min-width:2470px!important}#params .template-panel{grid-template-columns:260px minmax(0,1fr)}#params th.review-param{color:#b52f35}.param-review-note{color:#b52f35!important;font-weight:750}#plans[hidden]{display:none!important}.staff-table tfoot td{padding:12px 9px;border-top:2px solid #aebed5;background:#edf3fb;color:#203552;font-weight:800;text-align:right;white-space:nowrap}.staff-table tfoot .sticky-col{position:sticky;left:0;z-index:4;text-align:left;background:#e5eefb}.formula-card.total{border-top:3px solid #2c879a}.formula-card.total .formula-index{background:#e4f5f7;color:#17677a}';document.head.appendChild(style);
   rebuildHeaders();
   Promise.resolve(globalThis.beiaLoadPromise).then(()=>{
     state=normalizeState(state);globalState=normalizeState(globalState);if(appliedState)appliedState=normalizeState(appliedState);

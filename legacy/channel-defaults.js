@@ -33,11 +33,13 @@
   root.upgradeLocalDraft=function(saved){
     if(!saved?.channels)return saved;
     const retired=new Set(["图解自播","图解达播","LEC9.9"]);
+    const latest=Object.fromEntries(channels.map(c=>[c.name,c]));
     const result=structuredClone(saved);
     result.channels=result.channels.filter(c=>{
       const name=String(c?.name||"");
       return !retired.has(name)&&!name.startsWith("LEC实物");
-    });
+    }).map(c=>latest[c.name]?{...c,product:latest[c.name].product}:c);
+    result.settings={...(result.settings||{}),defaultSeason:root.BEIA_CHANNEL_DEFAULTS.settings.defaultSeason};
     result.defaultsRevision=root.BEIA_CHANNEL_DEFAULTS.defaultsRevision;
     return result;
   };

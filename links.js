@@ -1,6 +1,7 @@
 window.WORKBENCH_LINKS=[
   {title:"北极星A经营决策系统",category:"经营工具",href:"beia/",description:"北极星计算器、固定人力下的期次排班方案、统一渠道参数及方案版本对比。"},
   {title:"单北极星计算模板",category:"经营工具",href:"legacy/",description:"面向运营同学的独立测算工具，可调整例产、人效与成本，查看敏感性曲线并下载结果。"},
+  {title:"北极星A培训考试",category:"培训与测试",href:"exam/",description:"10道选择题和1道综合计算题，提交后自动评分；仅显示本人分数与逐题对错。"},
   {title:"2026年各渠道最佳人效专项分析",category:"专项分析",href:"analysis/efficiency.html",description:"按26暑全期实绩结算成本重算，含7渠道建议、过程验证和数据下载。",action:"输入密码查看报告 →"},
   {title:"切转团队分析合集",category:"专项分析",href:"analysis/transfer.html",description:"切转团队经营影响、逐品差异、归因建议与团队视角。",action:"输入密码查看报告 →"},
   {title:"26年承接人员切转专项分析-暑",category:"专项分析",href:"analysis/transfer-summer.html",description:"聚焦26暑承接人员切转，覆盖整体影响、切转动作、年级与条线路径、新老承接及后续动作。",action:"输入密码查看报告 →"}

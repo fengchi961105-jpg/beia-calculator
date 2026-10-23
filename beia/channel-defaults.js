@@ -10,10 +10,10 @@
     {name:"LEC1元",periods:2,baseEff:143,baseOutput:81,slope:-3,lead:.9,settle:71.9,material:0,labor:5.6,rd:3.4,coupling:43,volume:10500},
     {name:"思维365",product:"26秋寒_新思维",periods:1,baseEff:64,baseOutput:385,slope:-33,coupling:0,lead:181.4,settle:595.1,material:75.0,labor:15.8,rd:3.1,margin:78,refund:84,volume:5000},
     {name:"OK转学科",periods:1,baseEff:97,baseOutput:326,slope:-33,lead:160.9,settle:837.1,material:0,labor:0,rd:3.1,coupling:34.23,volume:3000},
-    {name:"端内0元",periods:4,baseEff:646,baseOutput:20,slope:-.2,lead:0,settle:7.5,material:0,labor:3.1,rd:1.4,coupling:33.18,volume:3000}
+    {name:"端内0元",periods:4,baseEff:230,baseOutput:40,slope:-.2,lead:0,settle:7.5,material:0,labor:3.1,rd:1.4,coupling:33.18,volume:3000}
   ].map(c=>({...common,...c}));
   root.BEIA_CHANNEL_COMMON=common;
-  root.BEIA_CHANNEL_DEFAULTS={version:5,defaultsRevision:"2026-10-22-autumn9-defaults",settings:{defaultSeason:"26秋下9"},channels};
+  root.BEIA_CHANNEL_DEFAULTS={version:5,defaultsRevision:"2026-10-23-internal-230-40",settings:{defaultSeason:"26秋下9"},channels};
   // Upgrade cached built-in defaults only. Named templates and plan snapshots are untouched.
   root.upgradeLocalDefaults=function(saved){
     if(!saved?.channels)return structuredClone(root.BEIA_CHANNEL_DEFAULTS);

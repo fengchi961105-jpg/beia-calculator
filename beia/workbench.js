@@ -5,7 +5,9 @@ const smartParameter=value=>{const n=Number(value);return Number.isFinite(n)?(Nu
 const originalNormalize=normalizeState;
 normalizeState=function(s){
   const result=originalNormalize(s);
-  if(!Array.isArray(result.products))result.products=Object.entries(BEIA_PRODUCT_DEFAULTS).map(([id,rows])=>({id,label:PRODUCT_OPTIONS.find(p=>p.value===id)?.label||id,rows:structuredClone(rows)}));
+  const defaults=Object.entries(BEIA_PRODUCT_DEFAULTS).map(([id,rows])=>({id,label:PRODUCT_OPTIONS.find(p=>p.value===id)?.label||id,rows:structuredClone(rows)}));
+  if(!Array.isArray(result.products))result.products=defaults;
+  else{const ids=new Set(result.products.map(p=>p.id));defaults.forEach(p=>{if(!ids.has(p.id))result.products.push(p)})}
   return result;
 };
 function updateCatalog(){

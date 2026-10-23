@@ -41,7 +41,7 @@
       <div class="field"><label for="season">售卖品</label>
         <select id="season" onchange="handleSeasonChange()">
           <option value="26秋上">26暑秋&amp;秋上9</option><option value="26秋下9">26秋下9</option><option value="26秋下12" selected>26秋下12</option>
-          <option value="26春上9">26春上9</option><option value="26春下9">26年春下9</option><option value="26春下12">26年春下12</option><option value="26暑_新思维">26年暑新思维</option><option value="26单秋_新思维">26年单秋新思维</option><option value="26秋寒_新思维">26年秋寒新思维</option>
+          <option value="26春上9">26春上9</option><option value="26春下9">26年春下9</option><option value="26春下12">26年春下12</option><option value="26暑_新思维">26年暑新思维</option><option value="26单秋_新思维">26年单秋新思维</option><option value="26秋寒_新思维">26年秋寒新思维</option><option value="26寒春_新思维">26年寒春新思维</option>
         </select>
       </div>
       <div class="field"><label for="leadProduct">拉新品</label><select id="leadProduct" onchange="handleChannelChange()"><option>图解数学</option><option>大通关</option><option>尖子生</option><option>思维365</option><option>LEC高价</option><option>LEC1元</option><option>商务高价</option><option>端内0元</option><option>OK转学科</option><option>测试渠道</option></select></div>
@@ -196,7 +196,14 @@ var P={
 {cat:"新思维",g:"三年级",asp:2499,rA:1720.1,rB:2549.6,cASP:null,crA:null,crB:null,m:.78,rf:.84,cm:.78,crf:.84,jr:.85},
 {cat:"新思维",g:"四年级",asp:2499,rA:1720.1,rB:2549.6,cASP:null,crA:null,crB:null,m:.78,rf:.84,cm:.78,crf:.84,jr:.85},
 {cat:"新思维",g:"五年级",asp:2499,rA:1720.1,rB:2549.6,cASP:null,crA:null,crB:null,m:.78,rf:.84,cm:.78,crf:.84,jr:.85},
-{cat:"新思维",g:"六年级",asp:2499,rA:1720.1,rB:2549.6,cASP:null,crA:null,crB:null,m:.78,rf:.84,cm:.78,crf:.84,jr:.85}]};
+{cat:"新思维",g:"六年级",asp:2499,rA:1720.1,rB:2549.6,cASP:null,crA:null,crB:null,m:.78,rf:.84,cm:.78,crf:.84,jr:.85}],
+"26寒春_新思维":[
+{cat:"新思维",g:"一年级",asp:2899,rA:1739.4,rB:3043.95,cASP:null,crA:null,crB:null,m:.78,rf:.86,cm:.78,crf:.86,jr:.82},
+{cat:"新思维",g:"二年级",asp:2899,rA:1739.4,rB:3043.95,cASP:null,crA:null,crB:null,m:.78,rf:.86,cm:.78,crf:.86,jr:.82},
+{cat:"新思维",g:"三年级",asp:2899,rA:1739.4,rB:3043.95,cASP:null,crA:null,crB:null,m:.78,rf:.86,cm:.78,crf:.86,jr:.82},
+{cat:"新思维",g:"四年级",asp:2899,rA:1739.4,rB:3043.95,cASP:null,crA:null,crB:null,m:.78,rf:.86,cm:.78,crf:.86,jr:.82},
+{cat:"新思维",g:"五年级",asp:2899,rA:1739.4,rB:3043.95,cASP:null,crA:null,crB:null,m:.78,rf:.86,cm:.78,crf:.86,jr:.82},
+{cat:"新思维",g:"六年级",asp:2899,rA:1739.4,rB:3043.95,cASP:null,crA:null,crB:null,m:.78,rf:.86,cm:.78,crf:.86,jr:.82}]};
 P=globalThis.BEIA_PRODUCT_DEFAULTS||P;
 var PRODUCT_OPTIONS=globalThis.BEIA_PRODUCT_OPTIONS||Object.keys(P).map(function(value){return{value:value,label:value}}),seasonSelect=document.getElementById("season");
 seasonSelect.innerHTML=PRODUCT_OPTIONS.filter(function(item){return P[item.value]}).map(function(item){return'<option value="'+item.value+'">'+item.label+'</option>'}).join("");

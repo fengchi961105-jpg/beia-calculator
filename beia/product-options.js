@@ -3,6 +3,7 @@ globalThis.BEIA_PRODUCT_OPTIONS=[
   {value:"26秋下9",label:"26秋下9"},
   {value:"26秋上",label:"26暑秋&秋上9"},
   {value:"26秋寒_新思维",label:"26年秋寒新思维"},
+  {value:"26寒春_新思维",label:"26年寒春新思维"},
   {value:"26单秋_新思维",label:"26年单秋新思维"},
   {value:"26暑_新思维",label:"26年暑新思维"},
   {value:"26春下12",label:"26年春下12"},

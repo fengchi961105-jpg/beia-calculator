@@ -1,9 +1,9 @@
 (()=>{
   'use strict';
   const {questions,calcItems,calcParams}=JSON.parse(document.getElementById('exam-data').textContent);
-  const VERSION='north-a-workbench-20261022-v5';
+  const VERSION='north-a-workbench-20261023-v6';
   const DRAFT=VERSION+'-draft',RESULT=VERSION+'-result';
-  const keys={q1:[0,1,2],q2:[0,1,2,3,4],q3:[1],q4:[2],q5:[3],q6:[0,1,2,3],q7:[2],q8:[1],q9:[2],q10:[0]};
+  const keys={q1:[0,1,2],q2:[0,1,2,3,4],q3:[1],q4:[2],q5:[3],q6:[0,1,2,3],q7:[2],q8:[1],q9:[1],q10:[3]};
   const numbers={c1:{value:180,tolerance:.01},c2:{value:83,tolerance:.01},c3:{value:1.3312,tolerance:.0005},c4:{value:66240,tolerance:.01}};
   const app=document.getElementById('app');
   const el=(tag,className,text)=>{const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node};

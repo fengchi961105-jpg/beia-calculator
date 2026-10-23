@@ -20,6 +20,21 @@
     const average=(key,fallback)=>{const values=rows.filter(r=>r[key]!=null).map(r=>Number(r[key])).filter(Number.isFinite);return values.length?values.reduce((a,b)=>a+b,0)/values.length:fallback};
     return{margin:average("m",.77)*100,refund:average("rf",.90)*100};
   }
+  const activateTemplateBase=activateTemplate;
+  function syncStaffProductsFromTemplate(){
+    const config=activeConfig();
+    config.channels.forEach(c=>{
+      const product=c.product||config.settings.defaultSeason;
+      if(!config.products.some(p=>p.id===product))return;
+      const rates=productRates(config,product),row=staffDraft.rows[c.name]||{};
+      staffDraft.rows[c.name]={...row,product,margin:rates.margin,refund:rates.refund};
+    });
+    localStorage.setItem(PLAN_KEY,JSON.stringify(staffDraft));
+  }
+  activateTemplate=function(options={}){
+    activateTemplateBase();
+    if(options.syncProducts)syncStaffProductsFromTemplate();
+  };
   productBlend=function(c,season,config=activeConfig()){
     const productId=season||c.product||config.settings.defaultSeason;
     const product=config.products.find(p=>p.id===productId||p.label===productId);
@@ -105,7 +120,7 @@
     if(staffTable&&!$("staffTotalRow")){const foot=document.createElement("tfoot");foot.id="staffTotalRow";staffTable.appendChild(foot)}
     const staffSeason=$("sSeason")?.closest(".field");if(staffSeason)staffSeason.style.display="none";
     const defaultSeason=$("pDefaultSeason")?.closest(".field");if(defaultSeason)defaultSeason.style.display="none";
-    const staffLead=document.querySelector("#staff .card .lead");if(staffLead)staffLead.textContent="每个渠道选择本期售卖品后，系统自动带出该品默认毛利率与退费系数；本期如有实际值，可直接修改后重算。";
+    const staffLead=document.querySelector("#staff .card .lead");if(staffLead)staffLead.textContent="应用参数模版后，各渠道自动带出模版中的默认售卖品及对应毛利率、退费系数；本期如有实际值，仍可在下方直接修改后重算。";
     const productNote=document.querySelector("#productCenter>p");if(productNote)productNote.innerHTML='维护一至六年级ASP和续报ASP，并维护售卖品默认毛利率、退费系数。默认值用于初始化，本期测算仍可覆盖。<br>参数来源：<a href="https://docs.yukework.com/doc?fileId=1872221674903367682" target="_blank" rel="noopener noreferrer">各学季北极星参数表</a>';
     const reviewNote=document.querySelector("#params .actions .muted-lock");if(reviewNote){reviewNote.classList.add("param-review-note");reviewNote.textContent="测算前，需重点核对红色指标。退费系数、税后毛利、收入重合系数及两项LPC月成本为相邻期次相对稳定项，仍需确认当期是否调整。"}
     customizeStaffMethodSection();

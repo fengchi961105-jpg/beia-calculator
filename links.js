@@ -1,4 +1,5 @@
 window.WORKBENCH_LINKS=[
+  {title:"北极星 · 本期经营看板",category:"经营监控",href:"northstar/",description:"七渠道经营实绩、子渠道与分年级数据；可切换最近三个商分数据分区。",action:"输入密码查看看板 →"},
   {title:"北极星A经营决策系统",category:"经营工具",href:"beia/",description:"北极星计算器、固定人力下的期次排班方案、统一渠道参数及方案版本对比。"},
   {title:"单北极星计算模板",category:"经营工具",href:"legacy/",description:"面向运营同学的独立测算工具，可调整例产、人效与成本，查看敏感性曲线并下载结果。"},
   {title:"北极星A培训考试",category:"培训与测试",href:"exam/",description:"10道选择题和1道综合计算题，提交后自动评分；仅显示本人分数与逐题对错。"},

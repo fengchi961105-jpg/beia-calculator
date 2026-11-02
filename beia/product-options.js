@@ -1,4 +1,5 @@
 globalThis.BEIA_PRODUCT_OPTIONS=[
+  {value:"27春上9",label:"27春上9"},
   {value:"26秋下12",label:"26秋下12"},
   {value:"26秋下9",label:"26秋下9"},
   {value:"26秋上",label:"26暑秋&秋上9"},

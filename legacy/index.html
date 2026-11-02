@@ -41,7 +41,7 @@ html[data-beia-standalone-test] .integrated-only,html:not([data-beia-standalone-
     <div class="overview-filter" style="width:580px;display:flex;gap:12px">
       <div class="field"><label for="season">售卖品</label>
         <select id="season" onchange="handleSeasonChange()">
-          <option value="26秋上">26暑秋&amp;秋上9</option><option value="26秋下9">26秋下9</option><option value="26秋下12" selected>26秋下12</option>
+          <option value="27春上9" selected>27春上9</option><option value="26秋上">26暑秋&amp;秋上9</option><option value="26秋下9">26秋下9</option><option value="26秋下12">26秋下12</option>
           <option value="26春上9">26春上9</option><option value="26春下9">26年春下9</option><option value="26春下12">26年春下12</option><option value="26暑_新思维">26年暑新思维</option><option value="26单秋_新思维">26年单秋新思维</option><option value="26秋寒_新思维">26年秋寒新思维</option><option value="26寒春_新思维">26年寒春新思维</option>
         </select>
       </div>
@@ -133,7 +133,7 @@ html[data-beia-standalone-test] .integrated-only,html:not([data-beia-standalone-
   </section>
 </main>
 
-<script src="product-defaults.js"></script><script src="asp-validation-overrides.js"></script><script src="product-options.js"></script><script>
+<script src="product-defaults.js?v=20261102a"></script><script src="asp-validation-overrides.js"></script><script src="product-options.js?v=20261102a"></script><script>
 var P={
 "26秋上":[
 {cat:"学科",g:"一年级",asp:850,rA:823,rB:1116,cASP:null,crA:null,crB:null,m:.77,rf:.85,cm:.77,crf:.85,jr:.80},
@@ -208,7 +208,7 @@ var P={
 P=globalThis.BEIA_PRODUCT_DEFAULTS||P;
 var PRODUCT_OPTIONS=globalThis.BEIA_PRODUCT_OPTIONS||Object.keys(P).map(function(value){return{value:value,label:value}}),seasonSelect=document.getElementById("season");
 seasonSelect.innerHTML=PRODUCT_OPTIONS.filter(function(item){return P[item.value]}).map(function(item){return'<option value="'+item.value+'">'+item.label+'</option>'}).join("");
-seasonSelect.value=P["26秋下12"]?"26秋下12":PRODUCT_OPTIONS[0].value;
+seasonSelect.value=P["27春上9"]?"27春上9":PRODUCT_OPTIONS[0].value;
 function channelPreset(c){return Object.assign({},c,{cycle:c.periods===1?"四周转":c.periods===4?"单周转":"双周转",settlement:c.settle,output:c.baseOutput})}
 var STANDALONE_TEST=document.documentElement.hasAttribute("data-beia-standalone-test"),CHANNEL_SOURCE=globalThis.BEIA_CHANNEL_DEFAULTS&&Array.isArray(BEIA_CHANNEL_DEFAULTS.channels)?BEIA_CHANNEL_DEFAULTS.channels:[];
 var CHANNEL_DEFAULTS=Object.fromEntries(CHANNEL_SOURCE.map(c=>[c.name,channelPreset(c)]));

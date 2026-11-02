@@ -4,7 +4,7 @@
   normalize=function(c){
     const source=c||{},out=previousNormalizeChannel(source),preset=DEFAULTS.channels.find(x=>x.name===source.name);
     out.g1=Number.isFinite(Number(source.g1))?Number(source.g1):0;
-    out.product=source.product||preset?.product||state?.settings?.defaultSeason||"26秋下9";
+    out.product=source.product||preset?.product||state?.settings?.defaultSeason||"27春上9";
     return out;
   };
   const previousNormalizeState=normalizeState;

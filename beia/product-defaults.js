@@ -8,3 +8,11 @@ globalThis.BEIA_PRODUCT_DEFAULTS["26寒春_新思维"]=[
   {cat:"新思维",g:"五年级",asp:2899,rA:1739.4,rB:3043.95,cASP:null,crA:null,crB:null,m:.78,rf:.86,cm:.78,crf:.86,jr:.82},
   {cat:"新思维",g:"六年级",asp:2899,rA:1739.4,rB:3043.95,cASP:null,crA:null,crB:null,m:.78,rf:.86,cm:.78,crf:.86,jr:.82}
 ];
+globalThis.BEIA_PRODUCT_DEFAULTS["27春上9"]=[
+  {cat:"学科",g:"一年级",asp:899,rA:1009,rB:1387,cASP:null,crA:null,crB:null,m:.77,rf:.80,cm:.77,crf:.80,jr:.82},
+  {cat:"学科",g:"二年级",asp:899,rA:1089,rB:1519,cASP:887,crA:1021,crB:1426,m:.77,rf:.80,cm:.77,crf:.80,jr:.82},
+  {cat:"学科",g:"三年级",asp:989,rA:1118,rB:1549,cASP:899,crA:1051,crB:1456,m:.77,rf:.80,cm:.77,crf:.80,jr:.82},
+  {cat:"学科",g:"四年级",asp:989,rA:1118,rB:1549,cASP:899,crA:1051,crB:1456,m:.77,rf:.80,cm:.77,crf:.80,jr:.82},
+  {cat:"学科",g:"五年级",asp:989,rA:1118,rB:1549,cASP:899,crA:1051,crB:1456,m:.77,rf:.80,cm:.77,crf:.80,jr:.82},
+  {cat:"学科",g:"六年级",asp:989,rA:1086,rB:1482,cASP:899,crA:1056,crB:1452,m:.77,rf:.80,cm:.77,crf:.80,jr:.82}
+];

@@ -1,6 +1,6 @@
 /* One set of built-in channel defaults for both calculation pages. */
 (function(root){
-  const common={product:"26秋下9",periods:2,g1:0,g2:8,rate:87,refund:90,margin:77,coupling:43,overlap:.993,active:15300,idle:8700,baseEff:80,baseOutput:150,slope:-8,lead:0,settle:0,material:0,labor:0,rd:0,volume:0};
+  const common={product:"27春上9",periods:2,g1:0,g2:8,rate:87,refund:80,margin:77,coupling:43,overlap:.993,active:15300,idle:8700,baseEff:80,baseOutput:150,slope:-8,lead:0,settle:0,material:0,labor:0,rd:0,volume:0};
   const channels=[
     {name:"图解数学",periods:2,baseEff:80,baseOutput:161,slope:-8,lead:54.3,settle:158.2,material:17.0,labor:15.8,rd:3.1,coupling:43,volume:32000},
     {name:"大通关",periods:2,baseEff:86,baseOutput:138,slope:-7,lead:44.1,settle:144.9,material:21.6,labor:15.8,rd:3.1,coupling:43,volume:6000},
@@ -13,7 +13,7 @@
     {name:"端内0元",periods:4,baseEff:230,baseOutput:40,slope:-.2,lead:0,settle:7.5,material:0,labor:3.1,rd:1.4,coupling:33.18,volume:3000}
   ].map(c=>({...common,...c}));
   root.BEIA_CHANNEL_COMMON=common;
-  root.BEIA_CHANNEL_DEFAULTS={version:5,defaultsRevision:"2026-10-23-internal-230-40",settings:{defaultSeason:"26秋下9"},channels};
+  root.BEIA_CHANNEL_DEFAULTS={version:6,defaultsRevision:"2026-11-02-spring-27-9",settings:{defaultSeason:"27春上9"},channels};
   // Upgrade cached built-in defaults only. Named templates and plan snapshots are untouched.
   root.upgradeLocalDefaults=function(saved){
     if(!saved?.channels)return structuredClone(root.BEIA_CHANNEL_DEFAULTS);

@@ -1,6 +1,6 @@
 /* One set of built-in channel defaults for both calculation pages. */
 (function(root){
-  const common={product:"27春上9",periods:2,g1:0,g2:8,rate:87,refund:80,margin:77,coupling:43,overlap:.993,active:15300,idle:8700,baseEff:80,baseOutput:150,slope:-8,lead:0,settle:0,material:0,labor:0,rd:0,volume:0};
+  const common={product:"27春上9",periods:2,g1:0,g2:8,rate:82,refund:80,margin:77,coupling:43,overlap:.993,active:15300,idle:8700,baseEff:80,baseOutput:150,slope:-8,lead:0,settle:0,material:0,labor:0,rd:0,volume:0};
   const channels=[
     {name:"图解数学",periods:2,baseEff:80,baseOutput:161,slope:-8,lead:54.3,settle:158.2,material:17.0,labor:15.8,rd:3.1,coupling:43,volume:32000},
     {name:"大通关",periods:2,baseEff:86,baseOutput:138,slope:-7,lead:44.1,settle:144.9,material:21.6,labor:15.8,rd:3.1,coupling:43,volume:6000},
@@ -8,7 +8,7 @@
     {name:"商务高价",periods:2,baseEff:109,baseOutput:131,slope:-4.5,lead:8.0,settle:104.3,material:0,labor:15.8,rd:3.1,coupling:43,volume:10000},
     {name:"LEC高价",periods:2,baseEff:110,baseOutput:152,slope:-7,lead:27.7,settle:156.8,material:13.3,labor:5.6,rd:3.4,coupling:43,volume:4500},
     {name:"LEC1元",periods:2,baseEff:143,baseOutput:81,slope:-3,lead:.9,settle:71.9,material:0,labor:5.6,rd:3.4,coupling:43,volume:10500},
-    {name:"思维365",product:"26秋寒_新思维",periods:1,baseEff:64,baseOutput:385,slope:-33,coupling:0,lead:181.4,settle:595.1,material:75.0,labor:15.8,rd:3.1,margin:78,refund:84,volume:5000},
+    {name:"思维365",product:"26秋寒_新思维",periods:1,baseEff:64,baseOutput:385,slope:-33,coupling:0,lead:181.4,settle:595.1,material:75.0,labor:15.8,rd:3.1,rate:87,margin:78,refund:84,volume:5000},
     {name:"OK转学科",periods:1,baseEff:97,baseOutput:326,slope:-33,lead:160.9,settle:837.1,material:0,labor:0,rd:3.1,coupling:34.23,volume:3000},
     {name:"端内0元",periods:4,baseEff:230,baseOutput:40,slope:-.2,lead:0,settle:7.5,material:0,labor:3.1,rd:1.4,coupling:33.18,volume:3000}
   ].map(c=>({...common,...c}));

@@ -1,6 +1,10 @@
 {
   "releases": [
     {
+      "app": "app.d70809e36b5eb101.bin",
+      "data": "snapshot.280e79455a9eadc5.bin"
+    },
+    {
       "app": "app.ff5b8256106ae97a.bin",
       "data": "snapshot.01fd75712c811eb0.bin"
     },
@@ -35,10 +39,6 @@
     {
       "app": "app.075f68eb6be03ec8.bin",
       "data": "snapshot.aea2ab187d5c6786.bin"
-    },
-    {
-      "app": "app.6afd5ff8bc3df611.bin",
-      "data": "snapshot.d84c5388db647e4c.bin"
     }
   ]
 }

@@ -1,8 +1,15 @@
 {
   "id": "lead-quality",
-  "asset": "bundle.7dcffc138a66e2c2.bin",
-  "sourceSha256": "c783fdf45ea9cdfbe5404c1c0898e3ed4fbfd87e8fd5af53f410aa0b67872498",
+  "asset": "bundle.d35c49778bf9bc21.bin",
+  "routes": {
+    "index.html": {
+      "asset": "bundle.d35c49778bf9bc21.bin",
+      "sourceSha256": "c783fdf45ea9cdfbe5404c1c0898e3ed4fbfd87e8fd5af53f410aa0b67872498",
+      "bytes": 23028,
+      "uncompressedBytes": 100716
+    }
+  },
   "dataDate": "20261111",
-  "builtAt": "2026-11-13T02:07:25.700Z",
+  "builtAt": "2026-11-13T03:01:55.776Z",
   "plaintextPublished": false
 }

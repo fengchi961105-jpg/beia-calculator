@@ -1,8 +1,21 @@
 {
   "id": "user-profile",
-  "asset": "bundle.00fb17aad6a70f10.bin",
-  "sourceSha256": "d0411ee76395263b5ce7ef5b7658c4156e195dd2ff7b63f784ca12f759d255ec",
+  "asset": "bundle.b488d337eb5174cf.bin",
+  "routes": {
+    "index.html": {
+      "asset": "bundle.b488d337eb5174cf.bin",
+      "sourceSha256": "d127e2dea19eb45a2942958be00554688c7b6fa00783b319e4e13c9f3d986afe",
+      "bytes": 78726,
+      "uncompressedBytes": 514270
+    },
+    "profile.html": {
+      "asset": "bundle.9fb3da5eebac018f.bin",
+      "sourceSha256": "0f61ab54d1a303a820790108d9d553538c8fca8db40180b82590d937487895a4",
+      "bytes": 481205,
+      "uncompressedBytes": 10402023
+    }
+  },
   "dataDate": "20261111",
-  "builtAt": "2026-11-13T02:07:25.668Z",
+  "builtAt": "2026-11-13T03:01:55.746Z",
   "plaintextPublished": false
 }

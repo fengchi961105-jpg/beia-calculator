@@ -1,21 +1,21 @@
 {
   "id": "user-profile",
-  "asset": "bundle.b488d337eb5174cf.bin",
+  "asset": "bundle.19f3d054ae7b6a5f.bin",
   "routes": {
     "index.html": {
-      "asset": "bundle.b488d337eb5174cf.bin",
-      "sourceSha256": "d127e2dea19eb45a2942958be00554688c7b6fa00783b319e4e13c9f3d986afe",
-      "bytes": 78726,
-      "uncompressedBytes": 514270
+      "asset": "bundle.19f3d054ae7b6a5f.bin",
+      "sourceSha256": "47f1803c5e088a5a905fab09882ec9f58fa14fe3f70428d3bb63a8cb410b10eb",
+      "bytes": 171659,
+      "uncompressedBytes": 1071436
     },
     "profile.html": {
-      "asset": "bundle.9fb3da5eebac018f.bin",
-      "sourceSha256": "0f61ab54d1a303a820790108d9d553538c8fca8db40180b82590d937487895a4",
-      "bytes": 481205,
-      "uncompressedBytes": 10402023
+      "asset": "bundle.294bd08224294d07.bin",
+      "sourceSha256": "047bd46f54b7d6a6c3c2c343ef38b3121e783aac28fa10a0fc9e46ca851b56af",
+      "bytes": 492128,
+      "uncompressedBytes": 10437491
     }
   },
   "dataDate": "20261111",
-  "builtAt": "2026-11-13T03:01:55.746Z",
+  "builtAt": "2026-11-13T11:50:48.673Z",
   "plaintextPublished": false
 }

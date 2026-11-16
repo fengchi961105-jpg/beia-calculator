@@ -10,14 +10,14 @@ window.WORKBENCH_LINKS=[
     "title": "用户画像分析",
     "category": "经营监控",
     "href": "user-profile/",
-    "description": "分渠道大类总览与四维画像明细；近期期次对比、已加微与已填写口径。",
+    "description": "各渠道与各维度全览；单双周、四周各保留近8期，可筛选期次和例子来源。",
     "action": "输入密码查看画像 →"
   },
   {
     "title": "问题例子反馈",
     "category": "经营监控",
     "href": "lead-quality/",
-    "description": "分渠道低质与报错占比、分年级条线变化及可复制问题摘要。",
+    "description": "七项问题占比、分渠道/分条线与分年级对照，支持自选对比期次。",
     "action": "输入密码查看反馈 →"
   },
   {

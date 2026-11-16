@@ -17,7 +17,7 @@ window.WORKBENCH_LINKS=[
     "title": "问题例子反馈",
     "category": "经营监控",
     "href": "lead-quality/",
-    "description": "七项问题占比、分渠道/分条线与分年级对照，支持自选对比期次。",
+    "description": "八项问题占比，条线全量/同产品筛选，支持上期及前2期同团队参考。",
     "action": "输入密码查看反馈 →"
   },
   {

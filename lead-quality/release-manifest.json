@@ -1,21 +1,21 @@
 {
   "id": "lead-quality",
-  "asset": "bundle.fdc0863cde4e918a.bin",
+  "asset": "bundle.eb4008bc8e285cb6.bin",
   "routes": {
     "index.html": {
-      "asset": "bundle.fdc0863cde4e918a.bin",
-      "sourceSha256": "3f19f3e9c65e9862bbbfe094e229ae37f2dd75a8b2fd7471320bb5248c837131",
-      "bytes": 41460,
-      "uncompressedBytes": 190238
+      "asset": "bundle.eb4008bc8e285cb6.bin",
+      "sourceSha256": "f4a3e4b373dae66080f10a0b9f5dbe85760a128fb1c8a3adfecfaa72aec2d071",
+      "bytes": 41554,
+      "uncompressedBytes": 190688
     },
     "lines.html": {
-      "asset": "bundle.81ef1a171fcbb4f5.bin",
-      "sourceSha256": "b5258347f830dffab502c957e0c1662ab4d5e9ebcd8b2f2790a892940e738f02",
-      "bytes": 41467,
-      "uncompressedBytes": 190265
+      "asset": "bundle.9041a852a5d8b1bc.bin",
+      "sourceSha256": "4bc39031fad7f2bab71cd5ae40ed505c429a97a735f38450bcd735aedcb5a878",
+      "bytes": 41561,
+      "uncompressedBytes": 190715
     }
   },
   "dataDate": "20261115",
-  "builtAt": "2026-11-16T05:46:11.122Z",
+  "builtAt": "2026-11-16T08:23:38.116Z",
   "plaintextPublished": false
 }

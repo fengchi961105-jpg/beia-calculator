@@ -1,21 +1,21 @@
 {
   "id": "user-profile",
-  "asset": "bundle.d57240e438701c93.bin",
+  "asset": "bundle.204c9bb05ff84593.bin",
   "routes": {
     "index.html": {
-      "asset": "bundle.d57240e438701c93.bin",
-      "sourceSha256": "34495295098fb38739806048773ab4d1cc64b7d74bb1deb324cdac45b191ed82",
-      "bytes": 489263,
-      "uncompressedBytes": 3763561
+      "asset": "bundle.204c9bb05ff84593.bin",
+      "sourceSha256": "1f15b790dd8f292b4dddb63b43ec2ee0d44166d30b58931f4031dc4580653d0a",
+      "bytes": 464451,
+      "uncompressedBytes": 3608919
     },
     "profile.html": {
-      "asset": "bundle.c0b7c0ac1bc4e136.bin",
-      "sourceSha256": "1f767e9c1d2398937252f658c8f5b240cd699594dd011c8cb36fc15db3163cfe",
-      "bytes": 978436,
-      "uncompressedBytes": 7818829
+      "asset": "bundle.df1571e5c4384b18.bin",
+      "sourceSha256": "e91a22077af15652b274adc5d591f133dd15c335cf72568f7a9da4f50ef11a26",
+      "bytes": 937337,
+      "uncompressedBytes": 7508653
     }
   },
   "dataDate": "20261117",
-  "builtAt": "2026-11-18T06:14:56.108Z",
+  "builtAt": "2026-11-18T06:34:33.991Z",
   "plaintextPublished": false
 }

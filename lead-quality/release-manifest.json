@@ -1,21 +1,21 @@
 {
   "id": "lead-quality",
-  "asset": "bundle.a61415576e198661.bin",
+  "asset": "bundle.2140699c56443dfc.bin",
   "routes": {
     "index.html": {
-      "asset": "bundle.a61415576e198661.bin",
-      "sourceSha256": "e4bc9a05c08e23cf8ec767424e607f1160900a3e9063439caf08f8ea57a88844",
-      "bytes": 42455,
-      "uncompressedBytes": 194220
+      "asset": "bundle.2140699c56443dfc.bin",
+      "sourceSha256": "4537b24caa3c0b8cf254254ca20b5da2a51877b24c4e2c131ee9777f04e14756",
+      "bytes": 41127,
+      "uncompressedBytes": 186225
     },
     "lines.html": {
-      "asset": "bundle.85f55e51ac2a0133.bin",
-      "sourceSha256": "fd8e3c26a1a37c1bbd348cae38e92c8ed5ae2716f198d58c490bdb4ffc92076c",
-      "bytes": 42462,
-      "uncompressedBytes": 194247
+      "asset": "bundle.c6ffc0b7b1ec11a3.bin",
+      "sourceSha256": "a3ee59199b39358ad5372f1183459a8843b3a9dd7cbe3446b8cee18fbda91c04",
+      "bytes": 41132,
+      "uncompressedBytes": 186252
     }
   },
   "dataDate": "20261117",
-  "builtAt": "2026-11-18T06:14:56.179Z",
+  "builtAt": "2026-11-18T06:34:34.061Z",
   "plaintextPublished": false
 }

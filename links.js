@@ -7,6 +7,13 @@ window.WORKBENCH_LINKS=[
     "action": "输入密码查看看板 →"
   },
   {
+    "title": "流量结构预警看板",
+    "category": "经营监控",
+    "href": "traffic-warning/",
+    "description": "分8条线查看双周、四周近6期结构变化、回捞分母和近6期例产影响测算。",
+    "action": "输入密码查看预警 →"
+  },
+  {
     "title": "用户画像分析",
     "category": "经营监控",
     "href": "user-profile/",

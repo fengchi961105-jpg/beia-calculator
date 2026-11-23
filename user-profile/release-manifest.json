@@ -1,21 +1,115 @@
 {
   "id": "user-profile",
-  "asset": "bundle.0d3e9399c6c2a3a8.bin",
+  "asset": "bundle.47ca977488c8ce20.bin",
   "routes": {
     "index.html": {
-      "asset": "bundle.0d3e9399c6c2a3a8.bin",
+      "parts": [
+        {
+          "file": "part.d44ac339fcdd7dbf26cc432c.bin",
+          "sha256": "d44ac339fcdd7dbf26cc432c9ca913243e6aad0bcaa2674177479b705f87de14",
+          "bytes": 131072
+        },
+        {
+          "file": "part.b7f8c0c8ce0081ae78f4b2e3.bin",
+          "sha256": "b7f8c0c8ce0081ae78f4b2e34e11aa5d3bc8337340a6eb19f0992d92afb65965",
+          "bytes": 131072
+        },
+        {
+          "file": "part.b765527ec5a52003ffb254fc.bin",
+          "sha256": "b765527ec5a52003ffb254fc248db06f523bdcf9ab239d4a5e036b7f0ab967fa",
+          "bytes": 131072
+        },
+        {
+          "file": "part.bb14fb0f6bced1d99e5f63e5.bin",
+          "sha256": "bb14fb0f6bced1d99e5f63e527410ec038794a66b48fadf44266020bfd36f1c6",
+          "bytes": 131072
+        },
+        {
+          "file": "part.0981daa5b71553360491407d.bin",
+          "sha256": "0981daa5b71553360491407d24b96118494a5e387138e0adf836193cbc20db75",
+          "bytes": 131072
+        },
+        {
+          "file": "part.a0c0e30c4bb6957417bac2c8.bin",
+          "sha256": "a0c0e30c4bb6957417bac2c8696b7f7a22756320fe9f41d632adbb747978e9c1",
+          "bytes": 24846
+        }
+      ],
+      "asset": "bundle.47ca977488c8ce20.bin",
       "sourceSha256": "fbc4e75724e19a363e9527851e949bf8c34dec318063de47317dd82971f22a48",
       "bytes": 680206,
       "uncompressedBytes": 6699859
     },
     "profile.html": {
-      "asset": "bundle.20d9d1e87f87d894.bin",
+      "parts": [
+        {
+          "file": "part.e59fc82226be58eb89363302.bin",
+          "sha256": "e59fc82226be58eb89363302b0433fc6ad3b069ac3894adccc5ee3b523593c86",
+          "bytes": 131072
+        },
+        {
+          "file": "part.8eb38b251976787b07c5bbcd.bin",
+          "sha256": "8eb38b251976787b07c5bbcdbefba4216f02523b5f8c922713e09b77e62e647e",
+          "bytes": 131072
+        },
+        {
+          "file": "part.af0b4c5bddbd05e8b1f073ba.bin",
+          "sha256": "af0b4c5bddbd05e8b1f073ba22e2587733c5514bafeb9c7bd0c6785928e593f7",
+          "bytes": 131072
+        },
+        {
+          "file": "part.0133f5fd9160c87f67f1f66e.bin",
+          "sha256": "0133f5fd9160c87f67f1f66ec6cbdd09cfc051e8ba28c8b58edc2e4174f72626",
+          "bytes": 131072
+        },
+        {
+          "file": "part.3797387aad067ab6ed2f3dc1.bin",
+          "sha256": "3797387aad067ab6ed2f3dc198e59c78127f1a217b00c6791781dd6324fe94c1",
+          "bytes": 131072
+        },
+        {
+          "file": "part.60952292c2659892e25c7e38.bin",
+          "sha256": "60952292c2659892e25c7e38b26252f1a55742c794336901a0127e9becf6c1b4",
+          "bytes": 131072
+        },
+        {
+          "file": "part.4f27fc9e5822ef0d596a7ee2.bin",
+          "sha256": "4f27fc9e5822ef0d596a7ee2314684e1397fc13a0ecd7b4185eb7a8a4beedb36",
+          "bytes": 131072
+        },
+        {
+          "file": "part.73ec0d40e3fec9205a7d1992.bin",
+          "sha256": "73ec0d40e3fec9205a7d199259772f99885b23cf7b1034b5a43c66be22885822",
+          "bytes": 131072
+        },
+        {
+          "file": "part.3c778a1bd3b567f8291f200e.bin",
+          "sha256": "3c778a1bd3b567f8291f200ee2d7716fc4282fbf671e94fd1c46e01c5dc1920a",
+          "bytes": 131072
+        },
+        {
+          "file": "part.d4a1401d08ff1de897034b08.bin",
+          "sha256": "d4a1401d08ff1de897034b085493a0bb4b03b6d1a29209d7a389022169a33c60",
+          "bytes": 131072
+        },
+        {
+          "file": "part.1ccc5c1ef0423bcefe281d35.bin",
+          "sha256": "1ccc5c1ef0423bcefe281d35f7a97e4ccb899e8b8123ab00ee793e26c755b3c2",
+          "bytes": 131072
+        },
+        {
+          "file": "part.5c25563a46425c6d90cd0983.bin",
+          "sha256": "5c25563a46425c6d90cd09831f6b36bd3f73f5c0982cef0718484149a6f38993",
+          "bytes": 110571
+        }
+      ],
+      "asset": "bundle.07331e76fe6cf17d.bin",
       "sourceSha256": "bebef7f8e76dcf8c14e14ac7cf35c5a5b4bd33236cd4d3bbf77637d1aaab4c0a",
       "bytes": 1552363,
       "uncompressedBytes": 13127252
     }
   },
   "dataDate": "20261122",
-  "builtAt": "2026-11-23T06:12:37.595Z",
+  "builtAt": "2026-11-23T06:30:48.650Z",
   "plaintextPublished": false
 }

@@ -14,13 +14,6 @@ window.WORKBENCH_LINKS=[
     "action": "输入密码查看画像 →"
   },
   {
-    "title": "流量结构预警",
-    "category": "经营监控",
-    "href": "traffic-warning/",
-    "description": "分条线查看期次流量结构、回捞剔除口径、历史例产影响及新品观察；双周、四周保留近6期。",
-    "action": "输入密码查看预警 →"
-  },
-  {
     "title": "问题例子反馈",
     "category": "经营监控",
     "href": "lead-quality/",

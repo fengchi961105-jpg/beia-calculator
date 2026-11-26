@@ -54,7 +54,7 @@
   }).observe(error, {childList:true, subtree:true, characterData:true});
 })();
 </script><script>
-const manifest={"salt":"nn9J0dYFQbDTz0aHEyZ1mw==","rounds":310000,"snapshotName":"snapshot.0328dbdee20fd61977811ba6a786b223881bde5724287bf7500a87d3ea016c24.json","app":{"file":"app.7d74668ed0c0b3d4.bin","iv":"nYAexua0FC+y+qog"},"data":{"file":"snapshot.873d4580eda0cb5f.bin","iv":"MW5EG5aTqWp+9aZR"}};
+const manifest={"salt":"heFvUcsIfO6PxPPyYBDhiA==","rounds":310000,"snapshotName":"snapshot.0328dbdee20fd61977811ba6a786b223881bde5724287bf7500a87d3ea016c24.json","app":{"file":"app.1ef308e500543d72.bin","iv":"wv/dbBiyYr/kFQNI"},"data":{"file":"snapshot.2af1788e5dba14bf.bin","iv":"Os/2V5A8rJzsGHRr"}};
 const sessionKey='traffic_warning_dashboard_key_v1';
 const b64=x=>Uint8Array.from(atob(x),c=>c.charCodeAt(0));
 async function decrypt(item,key){let bytes;for(let attempt=0;attempt<4;attempt++){try{const response=await fetch(item.file+(attempt?'?retry='+Date.now()+'-'+attempt:''),{cache:'no-store'});if(!response.ok)throw Error('http');bytes=await response.arrayBuffer();break}catch{bytes=null;if(attempt<3)await new Promise(resolve=>setTimeout(resolve,700*(attempt+1)))}}if(!bytes)throw Error('resource');let plain;try{window.GateExperience.stage('正在解锁数据…');plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64(item.iv)},key,bytes)}catch{throw Error('password')}if(typeof DecompressionStream!=='function')throw Error('browser');const stream=new Blob([plain]).stream().pipeThrough(new DecompressionStream('gzip'));return await new Response(stream).arrayBuffer();}

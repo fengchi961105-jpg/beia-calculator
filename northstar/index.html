@@ -54,7 +54,7 @@
   }).observe(error, {childList:true, subtree:true, characterData:true});
 })();
 </script><script>
-const manifest={"salt":"aWOO0wJK2NbEKTN9/nz5eQ==","rounds":310000,"snapshotName":"snapshot.12d7e748cc02e4c6d3d0e5df2db97b49d29a39fff96ca42afefd61bf828985d7.json","app":{"file":"app.4ea7de473ed82acf.bin","iv":"v9JNzamz7NDoQ8Wt"},"data":{"file":"snapshot.ff85fd6325788ae7.bin","iv":"csKTeAB6m1koysLn"}};
+const manifest={"salt":"uOBy8cfb/NwOh1mFf7tyKg==","rounds":310000,"snapshotName":"snapshot.12d7e748cc02e4c6d3d0e5df2db97b49d29a39fff96ca42afefd61bf828985d7.json","app":{"file":"app.5702ec07926cc776.bin","iv":"T66omj6anxvh9uRY"},"data":{"file":"snapshot.4503192734167192.bin","iv":"ThVw9C5EnQxRy3pL"}};
 const sessionKey='northstar_dashboard_key_v1';
 const b64=x=>Uint8Array.from(atob(x),c=>c.charCodeAt(0));
 async function decrypt(item,key){let bytes;for(let attempt=0;attempt<4;attempt++){try{const response=await fetch(item.file+(attempt?'?retry='+Date.now()+'-'+attempt:''),{cache:'no-store'});if(!response.ok)throw Error('http');bytes=await response.arrayBuffer();break}catch{bytes=null;if(attempt<3)await new Promise(resolve=>setTimeout(resolve,700*(attempt+1)))}}if(!bytes)throw Error('resource');let plain;try{window.GateExperience.stage('正在解锁数据…');plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64(item.iv)},key,bytes)}catch{throw Error('password')}if(typeof DecompressionStream!=='function')throw Error('browser');const stream=new Blob([plain]).stream().pipeThrough(new DecompressionStream('gzip'));return await new Response(stream).arrayBuffer();}

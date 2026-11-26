@@ -1,4 +1,5 @@
 window.WORKBENCH_LINKS=[
+  {"title": "流量结构预警看板", "category": "经营监控", "href": "traffic-warning/", "description": "按条线对比近6期流量结构和预计例产影响。", "action": "输入密码查看预警 →"},
   {
     "title": "北极星 · 本期经营看板",
     "category": "经营监控",

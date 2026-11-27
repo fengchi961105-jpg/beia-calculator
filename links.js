@@ -28,6 +28,13 @@ window.WORKBENCH_LINKS=[
     "action": "输入密码查看看板 →"
   },
   {
+    "title": "27寒商分目标对比",
+    "category": "经营监控",
+    "href": "business-comparison/",
+    "description": "按期次核对商分目标、经营实际、预估达成及渠道归属。",
+    "action": "输入密码查看看板 →"
+  },
+  {
     "title": "北极星A经营决策系统",
     "category": "经营工具",
     "href": "beia/",

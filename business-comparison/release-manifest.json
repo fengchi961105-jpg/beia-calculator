@@ -1,0 +1,12 @@
+{
+  "partition": "2026-11-26",
+  "financialPartition": "2026-11-24",
+  "htmlSha256": "5cc5302b31e528ebea66bf8968a74c8decb03c8b3a5aabd72a7c411b6aaeb97f",
+  "snapshotSha256": "19bf89d2df86388fcc1453e7df5a035d93743a031dab4ae19228eab3806ee0a8",
+  "releases": [
+    {
+      "app": "app.fa5fa9ee87b7f1d7.bin",
+      "data": "snapshot.e3dbf6d18fbae892.bin"
+    }
+  ]
+}

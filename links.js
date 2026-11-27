@@ -1,11 +1,10 @@
 window.WORKBENCH_LINKS=[
-  {"title": "流量结构预警看板", "category": "经营监控", "href": "traffic-warning/", "description": "按条线对比近6期流量结构和预计例产影响。", "action": "输入密码查看预警 →"},
   {
-    "title": "北极星 · 本期经营看板",
+    "title": "流量结构预警看板",
     "category": "经营监控",
-    "href": "northstar/",
-    "description": "七渠道经营实绩、子渠道与分年级数据；可切换最近三个商分数据分区。",
-    "action": "输入密码查看看板 →"
+    "href": "traffic-warning/",
+    "description": "按条线对比近6期流量结构和预计例产影响。",
+    "action": "输入密码查看预警 →"
   },
   {
     "title": "用户画像分析",
@@ -20,6 +19,13 @@ window.WORKBENCH_LINKS=[
     "href": "lead-quality/",
     "description": "八项问题占比，条线全量/同产品筛选，支持上期及前2期同团队参考。",
     "action": "输入密码查看反馈 →"
+  },
+  {
+    "title": "北极星 · 本期经营看板",
+    "category": "经营监控",
+    "href": "northstar/",
+    "description": "七渠道经营实绩、子渠道与分年级数据；可切换最近三个商分数据分区。",
+    "action": "输入密码查看看板 →"
   },
   {
     "title": "北极星A经营决策系统",
